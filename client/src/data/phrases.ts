@@ -3,6 +3,7 @@ export type PhraseCategory =
   | "directions"
   | "basics"
   | "emergency"
+  | "swears"
   | "the-bit";
 
 export interface Phrase {
@@ -153,6 +154,74 @@ export const phrases: Phrase[] = [
     category: "emergency",
   },
 
+  // Swears
+  {
+    italian: "Mannaggia!",
+    english: "Dang it! Safe, grandma-approved frustration.",
+    phonetic: "mahn-NAHD-jah",
+    category: "swears",
+  },
+  {
+    italian: "Che palle!",
+    english: "What a pain / this sucks. Casual but not polite.",
+    phonetic: "keh PAHL-leh",
+    category: "swears",
+  },
+  {
+    italian: "Merda!",
+    english: "Shit! Classic, direct, very useful.",
+    phonetic: "MEHR-dah",
+    category: "swears",
+  },
+  {
+    italian: "Cazzo!",
+    english: "Fuck! Strong, extremely common.",
+    phonetic: "KAHT-tsoh",
+    category: "swears",
+  },
+  {
+    italian: "Che cazzo?",
+    english: "What the fuck? For confusing menus, trains, or vibes.",
+    phonetic: "keh KAHT-tsoh",
+    category: "swears",
+  },
+  {
+    italian: "Porca miseria!",
+    english: "Damn it! Dramatic but safer than the nastier versions.",
+    phonetic: "POR-kah mee-ZEH-ryah",
+    category: "swears",
+  },
+  {
+    italian: "Porca puttana!",
+    english: "Goddammit / holy shit. Very spicy; use with caution.",
+    phonetic: "POR-kah poot-TAH-nah",
+    category: "swears",
+  },
+  {
+    italian: "Stronzo/a.",
+    english: "Asshole / jerk. Ends in -o for a guy, -a for a woman.",
+    phonetic: "STRON-tsoh / STRON-tsah",
+    category: "swears",
+  },
+  {
+    italian: "Vaffanculo!",
+    english: "Fuck off! Nuclear option; not for charming locals.",
+    phonetic: "vah-fahn-KOO-loh",
+    category: "swears",
+  },
+  {
+    italian: "Minchia!",
+    english: "Fuck / damn! Sicilian-flavored, expressive, very fun.",
+    phonetic: "MEEN-kyah",
+    category: "swears",
+  },
+  {
+    italian: "Non dire bestemmie.",
+    english: "Don't blaspheme. Italy has a whole danger category here.",
+    phonetic: "non DEE-reh behs-TEHM-myeh",
+    category: "swears",
+  },
+
   // The Bit
   {
     italian: "Dove si comprano le sigarette?",
@@ -197,5 +266,6 @@ export const categoryLabels: Record<PhraseCategory, string> = {
   directions: "🗺️ Directions",
   basics: "🤝 Basics",
   emergency: "🚨 Emergency",
+  swears: "😈 Swears",
   "the-bit": "😂 The Bit",
 };

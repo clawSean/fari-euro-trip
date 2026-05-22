@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import * as exifr from "exifr";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,6 +33,17 @@ interface CheckInCardProps {
   isoDate: string;
 }
 
+interface PhotoLocation {
+  lat: string;
+  lng: string;
+  mapsUrl: string;
+}
+
+interface PhotoMetadata {
+  location: PhotoLocation | null;
+  takenAt: string | null;
+}
+
 const romeCheckIns = [
   { label: "Vatican", emoji: "⛪", message: "Checked in at the Vatican ⛪" },
   { label: "Pantheon", emoji: "🏛️", message: "Checked in at the Pantheon 🏛️" },
@@ -43,6 +55,45 @@ const MAX_DIMENSION = 800;
 const JPEG_QUALITY = 0.65;
 const MAX_COMPRESSED_BYTES = 300 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
+
+function toIsoDate(value: unknown) {
+  if (!value) return null;
+
+  const date = value instanceof Date ? value : new Date(String(value));
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+async function readPhotoMetadata(file: File): Promise<PhotoMetadata> {
+  try {
+    const [gps, exif] = await Promise.all([
+      exifr.gps(file),
+      exifr.parse(file, ["DateTimeOriginal", "CreateDate", "ModifyDate"]).catch(() => null),
+    ]);
+    const latitude = Number(gps?.latitude);
+    const longitude = Number(gps?.longitude);
+    const takenAt = toIsoDate(
+      exif?.DateTimeOriginal ?? exif?.CreateDate ?? exif?.ModifyDate,
+    );
+
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      return { location: null, takenAt };
+    }
+
+    const lat = latitude.toFixed(5);
+    const lng = longitude.toFixed(5);
+
+    return {
+      takenAt,
+      location: {
+        lat,
+        lng,
+        mapsUrl: `https://maps.google.com/?q=${lat},${lng}`,
+      },
+    };
+  } catch {
+    return { location: null, takenAt: null };
+  }
+}
 
 function getNickname() {
   if (typeof window === "undefined") return "Trip Crew";
@@ -111,7 +162,13 @@ function parseMapsLine(line: string) {
   };
 }
 
-function CheckInPreview({ message }: { message: string }) {
+function CheckInPreview({
+  message,
+  photoLocationName,
+}: {
+  message: string;
+  photoLocationName?: string | null;
+}) {
   const lines = getCheckInPreviewLines(message);
 
   return (
@@ -119,6 +176,9 @@ function CheckInPreview({ message }: { message: string }) {
       {lines.map((line, index) => {
         const maps = parseMapsLine(line);
         if (maps) {
+          const isPhotoLocation = maps.meta === "Location from photo";
+          const mapLabel = isPhotoLocation && photoLocationName ? photoLocationName : "Open in Maps";
+
           return (
             <div key={`${line}-${index}`} className="space-y-1">
               <a
@@ -128,7 +188,7 @@ function CheckInPreview({ message }: { message: string }) {
                 className="inline-flex items-center gap-1.5 rounded-full bg-italy-green/10 px-2.5 py-1 text-xs font-semibold text-italy-green hover:bg-italy-green/15"
               >
                 <MapPin className="h-3.5 w-3.5" />
-                Open in Maps
+                <span className="truncate">{mapLabel}</span>
                 <ExternalLink className="h-3 w-3" />
               </a>
               {maps.meta && <p className="text-xs text-muted-foreground">{maps.meta}</p>}
@@ -150,6 +210,18 @@ function formatTime(date: Date | string) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
+function formatPhotoTakenAt(date: Date | string) {
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return null;
+
+  return d.toLocaleString([], {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export function CheckInCard({ location, isoDate }: CheckInCardProps) {
   const [customPlace, setCustomPlace] = useState("");
   const [checkInNote, setCheckInNote] = useState("");
@@ -158,9 +230,15 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
   const [locationError, setLocationError] = useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
+  const [detectedPhotoLocation, setDetectedPhotoLocation] = useState<PhotoLocation | null>(null);
+  const [photoTakenAt, setPhotoTakenAt] = useState<string | null>(null);
+  const [attachPhotoLocation, setAttachPhotoLocation] = useState(false);
+  const [photoLocationSkipped, setPhotoLocationSkipped] = useState(false);
+  const [isReadingPhotoLocation, setIsReadingPhotoLocation] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"checkin" | "gallery">("checkin");
+  const [pendingCheckIn, setPendingCheckIn] = useState<{ label: string; message: string } | null>(null);
 
   const checkIns = getDefaultCheckIns(location);
 
@@ -171,13 +249,27 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
   });
 
   const checkInMessages = messages.filter(isTripCheckIn).reverse();
+  const hasAttachedPhotoLocation = Boolean(photoPreview && attachPhotoLocation && detectedPhotoLocation);
 
   const checkInMutation = useMutation({
-    mutationFn: async (payload: { message: string; photo?: string | null }) => {
+    mutationFn: async (payload: {
+      message: string;
+      photo?: string | null;
+      photoTakenAt?: string | null;
+      photoLatitude?: number | null;
+      photoLongitude?: number | null;
+    }) => {
       const res = await apiRequest("POST", "/api/chat/messages", {
         nickname: getNickname(),
         message: payload.message,
         ...(payload.photo ? { photo: payload.photo } : {}),
+        ...(payload.photoTakenAt ? { photoTakenAt: payload.photoTakenAt } : {}),
+        ...(payload.photoLatitude !== undefined && payload.photoLatitude !== null
+          ? { photoLatitude: payload.photoLatitude }
+          : {}),
+        ...(payload.photoLongitude !== undefined && payload.photoLongitude !== null
+          ? { photoLongitude: payload.photoLongitude }
+          : {}),
       });
       return res.json();
     },
@@ -188,6 +280,12 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
       setCheckInNote("");
       setPhotoPreview(null);
       setPhotoError(null);
+      setDetectedPhotoLocation(null);
+      setPhotoTakenAt(null);
+      setAttachPhotoLocation(false);
+      setPhotoLocationSkipped(false);
+      setIsReadingPhotoLocation(false);
+      setPendingCheckIn(null);
     },
   });
 
@@ -197,6 +295,11 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
     if (!file) return;
 
     setPhotoError(null);
+    setDetectedPhotoLocation(null);
+    setPhotoTakenAt(null);
+    setAttachPhotoLocation(false);
+    setPhotoLocationSkipped(false);
+    setIsReadingPhotoLocation(false);
 
     if (!ACCEPTED_TYPES.includes(file.type)) {
       setPhotoError("Unsupported format. Use JPEG, PNG, or WebP.");
@@ -209,33 +312,72 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
     }
 
     try {
+      setIsReadingPhotoLocation(true);
+      const photoMetadataPromise = readPhotoMetadata(file);
       const dataUrl = await compressImage(file);
       setPhotoPreview(dataUrl);
+      const photoMetadata = await photoMetadataPromise;
+      setDetectedPhotoLocation(photoMetadata.location);
+      setPhotoTakenAt(photoMetadata.takenAt);
     } catch (err) {
       setPhotoError(err instanceof Error ? err.message : "Failed to process photo.");
+    } finally {
+      setIsReadingPhotoLocation(false);
     }
   }, []);
 
   const removePhoto = useCallback(() => {
     setPhotoPreview(null);
     setPhotoError(null);
+    setDetectedPhotoLocation(null);
+    setPhotoTakenAt(null);
+    setAttachPhotoLocation(false);
+    setPhotoLocationSkipped(false);
+    setIsReadingPhotoLocation(false);
   }, []);
 
   const withOptionalNote = (message: string) => {
     const note = checkInNote.trim();
-    return note ? `${message}\n📝 ${note}` : message;
+    const notedMessage = note ? `${message}\n📝 ${note}` : message;
+
+    if (hasAttachedPhotoLocation && detectedPhotoLocation) {
+      return `${notedMessage}\n${detectedPhotoLocation.mapsUrl} · Location from photo`;
+    }
+
+    return notedMessage;
   };
 
   const sendCheckIn = (message: string) => {
     const stampedMessage = `${withOptionalNote(message)}\n📍 Trip check-in · ${isoDate}`;
-    checkInMutation.mutate({ message: stampedMessage, photo: photoPreview });
+    checkInMutation.mutate({
+      message: stampedMessage,
+      photo: photoPreview,
+      photoTakenAt: photoPreview ? photoTakenAt : null,
+      photoLatitude: hasAttachedPhotoLocation && detectedPhotoLocation
+        ? Number(detectedPhotoLocation.lat)
+        : null,
+      photoLongitude: hasAttachedPhotoLocation && detectedPhotoLocation
+        ? Number(detectedPhotoLocation.lng)
+        : null,
+    });
   };
 
-  const sendCustom = () => {
+  const getPendingMessage = () => {
     const place = customPlace.trim();
-    if (!place) return;
-    sendCheckIn(`Checked in at ${place} 📍`);
+    if (place) return `Checked in at ${place} 📍`;
+    if (pendingCheckIn) return pendingCheckIn.message;
+    if (hasAttachedPhotoLocation) return "Photo location check-in 📍";
+    return `Checked in at ${location} 📍`;
   };
+
+  const postCheckIn = () => {
+    const message = getPendingMessage();
+    if (!message) return;
+
+    sendCheckIn(message);
+  };
+
+  const canPostCheckIn = !isLocating && !checkInMutation.isPending;
 
   const sendCurrentLocation = () => {
     setLocationError(null);
@@ -256,7 +398,10 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
           ? `Approx ${Math.round(accuracy)}m accuracy`
           : "";
         setIsLocating(false);
-        sendCheckIn(`Live location check-in 📍\n${mapsUrl}${accuracyText ? `\n${accuracyText}` : ""}`);
+        setPendingCheckIn({
+          label: "Current GPS",
+          message: `Live location check-in 📍\n${mapsUrl}${accuracyText ? `\n${accuracyText}` : ""}`,
+        });
       },
       () => {
         setIsLocating(false);
@@ -357,14 +502,18 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
                 {/* Preset buttons */}
                 <div className="grid grid-cols-2 gap-2">
                   {checkIns.map((item) => (
-                    <Button
-                      key={item.label}
-                      variant="outline"
-                      className="justify-start rounded-2xl bg-white/80 border-italy-green/20 hover:bg-italy-green/10"
-                      onClick={() => sendCheckIn(item.message)}
-                      disabled={checkInMutation.isPending}
-                      data-testid={`button-check-in-${item.label.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
-                    >
+	                    <Button
+	                      key={item.label}
+	                      variant="outline"
+	                      className={`justify-start rounded-2xl border-italy-green/20 hover:bg-italy-green/10 ${
+	                        pendingCheckIn?.label === item.label
+	                          ? "bg-italy-green/10 text-italy-green ring-1 ring-italy-green/30"
+	                          : "bg-white/80"
+	                      }`}
+	                      onClick={() => setPendingCheckIn({ label: item.label, message: item.message })}
+	                      disabled={checkInMutation.isPending}
+	                      data-testid={`button-check-in-${item.label.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
+	                    >
                       <span className="mr-2">{item.emoji}</span>
                       {item.label}
                     </Button>
@@ -413,6 +562,71 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
+                      {isReadingPhotoLocation && (
+                        <div className="border-t border-italy-green/10 px-3 py-2 text-xs text-muted-foreground">
+                          Checking photo location…
+                        </div>
+                      )}
+                      {detectedPhotoLocation && !attachPhotoLocation && !photoLocationSkipped && (
+                        <div className="space-y-2 border-t border-italy-green/10 bg-italy-green/5 px-3 py-2">
+                          <div className="flex items-start gap-2 text-sm text-foreground">
+                            <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-italy-green" />
+                            <div>
+                              <p className="font-medium">Location found in this photo</p>
+                              <p className="text-xs text-muted-foreground">Add it to this check-in?</p>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              type="button"
+                              size="sm"
+                              className="h-8 rounded-full bg-italy-green px-3 text-xs hover:bg-italy-green/90"
+                              onClick={() => {
+                                setAttachPhotoLocation(true);
+                                setPhotoLocationSkipped(false);
+                              }}
+                              disabled={checkInMutation.isPending}
+                              data-testid="button-use-photo-location"
+                            >
+                              Use location
+                            </Button>
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="outline"
+                              className="h-8 rounded-full bg-white/80 px-3 text-xs"
+                              onClick={() => {
+                                setAttachPhotoLocation(false);
+                                setPhotoLocationSkipped(true);
+                              }}
+                              disabled={checkInMutation.isPending}
+                              data-testid="button-skip-photo-location"
+                            >
+                              Skip
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                      {detectedPhotoLocation && attachPhotoLocation && (
+                        <div className="flex items-center justify-between gap-2 border-t border-italy-green/10 bg-italy-green/5 px-3 py-2 text-xs">
+                          <span className="inline-flex items-center gap-1.5 font-medium text-italy-green">
+                            <MapPin className="h-3.5 w-3.5" />
+                            Location attached
+                          </span>
+                          <button
+                            type="button"
+                            className="font-medium text-muted-foreground hover:text-foreground"
+                            onClick={() => {
+                              setAttachPhotoLocation(false);
+                              setPhotoLocationSkipped(true);
+                            }}
+                            disabled={checkInMutation.isPending}
+                            data-testid="button-remove-photo-location"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <Button
@@ -434,43 +648,61 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
                   )}
                 </div>
 
-                {/* GPS */}
-                <Button
-                  variant="default"
-                  className="w-full rounded-2xl bg-italy-green hover:bg-italy-green/90"
-                  onClick={sendCurrentLocation}
-                  disabled={isLocating || checkInMutation.isPending}
-                  data-testid="button-gps-check-in"
-                >
-                  <LocateFixed className="w-4 h-4 mr-2" />
-                  {isLocating ? "Finding you…" : "Use current GPS"}
-                </Button>
-
-                {/* Custom spot */}
+                {/* Custom spot / GPS */}
                 <div className="flex gap-2">
-                  <Input
-                    value={customPlace}
-                    onChange={(event) => setCustomPlace(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        sendCustom();
-                      }
-                    }}
-                    placeholder="Custom spot…"
-                    maxLength={60}
-                    disabled={checkInMutation.isPending}
-                    data-testid="input-custom-check-in"
-                  />
-                  <Button
-                    size="icon"
-                    onClick={sendCustom}
-                    disabled={!customPlace.trim() || checkInMutation.isPending}
-                    data-testid="button-custom-check-in"
-                  >
-                    <Send className="w-4 h-4" />
-                  </Button>
-                </div>
+                  {!hasAttachedPhotoLocation && (
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant={pendingCheckIn?.label === "Current GPS" ? "default" : "outline"}
+                      className={`flex-shrink-0 rounded-2xl ${
+                        pendingCheckIn?.label === "Current GPS"
+                          ? "bg-italy-green hover:bg-italy-green/90"
+                          : "bg-white/80 border-italy-green/20 hover:bg-italy-green/10"
+                      }`}
+                      onClick={sendCurrentLocation}
+                      disabled={isLocating || checkInMutation.isPending}
+                      aria-label="Use current GPS"
+                      data-testid="button-gps-check-in"
+                    >
+                      <LocateFixed className="w-4 h-4" />
+                    </Button>
+                  )}
+		                  <Input
+		                    value={customPlace}
+	                    onChange={(event) => {
+	                      setCustomPlace(event.target.value);
+	                      if (event.target.value.trim()) {
+	                        setPendingCheckIn(null);
+	                      }
+	                    }}
+	                    onKeyDown={(event) => {
+	                      if (event.key === "Enter") {
+	                        event.preventDefault();
+	                        postCheckIn();
+	                      }
+	                    }}
+	                    placeholder={hasAttachedPhotoLocation ? "Optional place name…" : "Custom spot…"}
+	                    maxLength={60}
+		                    disabled={checkInMutation.isPending}
+		                    className="flex-1"
+		                    data-testid="input-custom-check-in"
+		                  />
+		                </div>
+
+                {pendingCheckIn?.label === "Current GPS" && !customPlace.trim() && (
+                  <p className="px-1 text-xs font-medium text-italy-green">📍 GPS ready — tap Post</p>
+                )}
+
+	                <Button
+	                  className="w-full rounded-2xl bg-italy-green hover:bg-italy-green/90"
+	                  onClick={postCheckIn}
+	                  disabled={!canPostCheckIn}
+	                  data-testid="button-post-check-in"
+	                >
+	                  <Send className="w-4 h-4 mr-2" />
+	                  {checkInMutation.isPending ? "Posting…" : "Post check-in"}
+	                </Button>
 
                 {locationError && (
                   <div className="flex items-start gap-2 rounded-2xl bg-italy-red/10 px-3 py-2 text-sm text-italy-red">
@@ -520,7 +752,12 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
                           <span className="text-xs font-semibold text-italy-green">{msg.nickname}</span>
                           <span className="text-[11px] text-muted-foreground">{formatTime(msg.createdAt)}</span>
                         </div>
-                        <CheckInPreview message={msg.message} />
+                        <CheckInPreview message={msg.message} photoLocationName={msg.photoLocationName} />
+                        {msg.photoTakenAt && formatPhotoTakenAt(msg.photoTakenAt) && (
+                          <p className="mt-2 text-[11px] text-muted-foreground">
+                            Taken {formatPhotoTakenAt(msg.photoTakenAt)}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))

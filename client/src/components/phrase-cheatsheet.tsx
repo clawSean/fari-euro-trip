@@ -8,6 +8,7 @@ const CATEGORY_ORDER: PhraseCategory[] = [
   "directions",
   "basics",
   "emergency",
+  "swears",
   "the-bit",
 ];
 

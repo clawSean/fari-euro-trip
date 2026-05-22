@@ -221,11 +221,14 @@
 
 @keyframes confetti-fall {
   0% {
-    transform: translateY(-100vh) rotate(0deg);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.8);
+    opacity: 1;
+  }
+  18% {
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh) rotate(720deg);
+    transform: translate3d(var(--confetti-drift, 0), 115vh, 0) rotate(var(--confetti-spin, 720deg)) scale(1);
     opacity: 0;
   }
 }
@@ -252,7 +255,8 @@
 }
 
 .animate-confetti {
-  animation: confetti-fall 3s linear forwards;
+  animation: confetti-fall 3s cubic-bezier(0.16, 0.68, 0.32, 1) forwards;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
 }
 
 .glass-effect {

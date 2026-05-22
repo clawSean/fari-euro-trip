@@ -55,6 +55,59 @@ function isTripCheckIn(message: ChatMessage) {
   return message.message.includes("📍 Trip check-in ·");
 }
 
+const URL_PART_PATTERN = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+const TRAILING_URL_PUNCTUATION_PATTERN = /[.,!?;:)]*$/;
+
+function splitUrlTrailingPunctuation(value: string) {
+  const punctuation = value.match(TRAILING_URL_PUNCTUATION_PATTERN)?.[0] ?? "";
+  if (!punctuation) {
+    return { urlText: value, trailing: "" };
+  }
+  return {
+    urlText: value.slice(0, -punctuation.length),
+    trailing: punctuation,
+  };
+}
+
+function normalizeHref(value: string) {
+  return value.startsWith("www.") ? `https://${value}` : value;
+}
+
+function LinkifiedMessage({ text }: { text: string }) {
+  const parts = text.split(URL_PART_PATTERN);
+
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (!URL_PART_PATTERN.test(part)) {
+          URL_PART_PATTERN.lastIndex = 0;
+          return <span key={`text-${index}`}>{part}</span>;
+        }
+
+        URL_PART_PATTERN.lastIndex = 0;
+        const { urlText, trailing } = splitUrlTrailingPunctuation(part);
+        if (!urlText) {
+          return <span key={`text-${index}`}>{part}</span>;
+        }
+
+        return (
+          <span key={`link-${index}`}>
+            <a
+              href={normalizeHref(urlText)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-italy-green underline decoration-italy-green/40 underline-offset-2 hover:text-italy-red hover:decoration-italy-red/50"
+            >
+              {urlText}
+            </a>
+            {trailing}
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
 const CHAT_LAST_SEEN_KEY = "gelato-chat-last-seen-message-id";
 
 function getMessageId(message: ChatMessage) {
@@ -255,7 +308,7 @@ export function ChatBox() {
                       </span>
                     </div>
                     <p className="text-sm text-foreground/90 break-words whitespace-pre-line [overflow-wrap:anywhere]">
-                      {msg.message}
+                      <LinkifiedMessage text={msg.message} />
                     </p>
                     {msg.photo && (
                       <img

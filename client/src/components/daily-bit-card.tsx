@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, ChevronDown, Circle, RotateCcw } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ConfettiBurst } from "@/components/confetti-burst";
 import { DailyBit } from "@/data/daily-bits";
 
 interface DailyBitCardProps {
@@ -9,8 +10,16 @@ interface DailyBitCardProps {
   featured?: boolean;
 }
 
+function getQuestSignature(bit: DailyBit) {
+  return bit.sideQuests
+    .join("|")
+    .split("")
+    .reduce((hash, char) => ((hash << 5) - hash + char.charCodeAt(0)) | 0, 0)
+    .toString(36);
+}
+
 function getStorageKey(bit: DailyBit) {
-  return `side-quests:${bit.isoDate}`;
+  return `side-quests:${bit.isoDate}:${getQuestSignature(bit)}`;
 }
 
 function getExpandedStorageKey(bit: DailyBit) {
@@ -50,6 +59,7 @@ export function DailyBitCard({ bit, featured = false }: DailyBitCardProps) {
   const expandedStorageKey = useMemo(() => getExpandedStorageKey(bit), [bit]);
   const [completed, setCompleted] = useState<boolean[]>(() => getSavedCompleted(bit));
   const [isExpanded, setIsExpanded] = useState(() => getSavedExpanded(bit, featured));
+  const [confettiRunId, setConfettiRunId] = useState(0);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -64,17 +74,17 @@ export function DailyBitCard({ bit, featured = false }: DailyBitCardProps) {
   const completedCount = completed.filter(Boolean).length;
   const allComplete = completedCount === bit.sideQuests.length && bit.sideQuests.length > 0;
 
-  useEffect(() => {
-    if (!featured || !allComplete || !isExpanded) return;
-
-    const timer = window.setTimeout(() => setIsExpanded(false), 800);
-    return () => window.clearTimeout(timer);
-  }, [allComplete, featured, isExpanded]);
-
   const toggleQuest = (index: number) => {
-    setCompleted((current) =>
-      current.map((value, questIndex) => (questIndex === index ? !value : value)),
+    const wasComplete = completed[index];
+    const nextCompleted = completed.map((value, questIndex) =>
+      questIndex === index ? !value : value,
     );
+
+    setCompleted(nextCompleted);
+
+    if (!wasComplete && nextCompleted.length > 0 && nextCompleted.every(Boolean)) {
+      setConfettiRunId((current) => current + 1);
+    }
   };
 
   const resetQuests = () => {
@@ -98,6 +108,7 @@ export function DailyBitCard({ bit, featured = false }: DailyBitCardProps) {
       }`}
       data-testid="card-todays-missions"
     >
+      {confettiRunId > 0 && <ConfettiBurst key={confettiRunId} pieceCount={86} />}
       {featured && (
         <div className="h-1.5 bg-gradient-to-r from-italy-green via-white to-italy-red" />
       )}
@@ -113,12 +124,12 @@ export function DailyBitCard({ bit, featured = false }: DailyBitCardProps) {
             <div className="flex items-center gap-2 mb-1">
               <span className={featured ? "text-xl" : "text-base"} aria-hidden="true">🎯</span>
               <span className={`uppercase tracking-widest font-semibold ${featured ? "text-italy-red text-xs" : "text-muted-foreground text-xs"}`}>
-                {featured ? "Today's Missions" : "Crew Side Quests 🎯"}
+                {featured ? "Today's Mission Board" : "Crew Side Quests 🎯"}
               </span>
             </div>
             <p className={featured ? "text-sm font-medium text-foreground" : "text-xs text-muted-foreground"}>
-              {completedCount}/{bit.sideQuests.length} complete{allComplete ? " ✅" : ""}
-              {showQuestDetails ? " · tap a quest to mark it done" : " · tap to expand"}
+              {completedCount}/{bit.sideQuests.length} done{allComplete ? " ✅" : ""}
+              {showQuestDetails ? " · tap anything you actually did" : " · tap to expand"}
             </p>
           </div>
 
@@ -185,7 +196,7 @@ export function DailyBitCard({ bit, featured = false }: DailyBitCardProps) {
         {showQuestDetails && allComplete && (
           <div className="mt-4 px-4 py-3 bg-italy-green/10 border border-italy-green/25 rounded-lg">
             <p className="text-xs font-medium text-italy-green leading-snug">
-              ✅ Side quest board cleared. Dangerous levels of vacation competence.
+              ✅ Option board cleared. Dangerous levels of vacation competence.
             </p>
           </div>
         )}

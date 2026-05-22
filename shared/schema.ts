@@ -33,4 +33,9 @@ export type InsertChatMessage = z.infer<typeof insertChatMessageSchema>;
 export type ChatMessage = typeof chatMessages.$inferSelect & {
   /** Optional base64 data-URL photo attached to the message (from SQLite chat API) */
   photo?: string | null;
+  /** EXIF metadata extracted before client-side compression (from SQLite chat API) */
+  photoTakenAt?: string | null;
+  photoLatitude?: number | null;
+  photoLongitude?: number | null;
+  photoLocationName?: string | null;
 };

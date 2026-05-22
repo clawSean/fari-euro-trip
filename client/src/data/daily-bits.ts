@@ -1,3 +1,5 @@
+import amalfiCoastSunset from "@assets/generated_images/amalfi_coast_sunset_view.png";
+
 export interface SuggestionSection {
   label: string;
   emoji: string;
@@ -142,7 +144,7 @@ export const dailyBits: Record<string, DailyBit> = {
     eyebrow: "Coast transfer day",
     heroTitle: "Amalfi, First Look",
     heroSubtitle: "Roma Termini to cliffs, lemons, and full coastal drama.",
-    heroImageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Amalfi_Coast_(Italy).jpg",
+    heroImageUrl: amalfiCoastSunset,
     urgencyLine: "Rome → Naples → Amalfi Coast. 12:30pm private transfer from Naples Central, then Via Papa Leone X in Amalfi.",
     suggestionSections: [
       {
@@ -209,26 +211,184 @@ export const dailyBits: Record<string, DailyBit> = {
     sideQuests: [
       "🚂 Make the train. Frecciarossa 8335, Roma Termini 10:20.",
       "🚐 Private transfer pickup at Naples Central Station, 12:30pm.",
-      "🌊 First look at the coast — mandatory awe moment",
+      "🍋 Eat or drink something aggressively lemon within one hour of arrival",
     ],
     chaosBonus: "If everyone survives the transfer and still gets a sea-view drink, Amalfi has officially begun.",
   },
   "2026-05-16": {
     isoDate: "2026-05-16",
+    headlineOverride: "Ravello Day",
+    eyebrow: "Hilltop views day",
+    heroTitle: "Ravello Above It All",
+    heroSubtitle: "Terraces, gardens, lemon light, and the coast from the balcony seats.",
+    heroImageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Cimbrone_terraza_infinito_01.jpg",
+    urgencyLine: "Today is Ravello. Make the uphill move, find the gardens, get the ridiculous views, then drift back to Amalfi for the evening.",
+    suggestionSections: [
+      {
+        label: "Morning move",
+        emoji: "☕",
+        ideas: [
+          "Coffee first, then commit to the Ravello climb/ride before the day gets too loose",
+          "Check bus/taxi timing early; hilltop towns reward people who avoid transit roulette",
+          "Keep the plan simple: get up there, see the gardens, let the views do the work",
+        ],
+      },
+      {
+        label: "Ravello anchors",
+        emoji: "🌿",
+        ideas: [
+          "Villa Cimbrone / Terrace of Infinity if the crew wants the balcony seats",
+          "Villa Rufolo for gardens, views, and maximum graceful wandering",
+          "Piazza Centrale for a reset drink before deciding how ambitious everyone still feels",
+        ],
+      },
+      {
+        label: "View / photo targets",
+        emoji: "📸",
+        ideas: [
+          "Terrace of Infinity shot, because sometimes the famous thing is famous for a reason",
+          "Garden arches, cliff edges, and any angle that makes the coastline look fake",
+          "One group photo before everyone starts pretending they are too candid for group photos",
+        ],
+      },
+      {
+        label: "Evening ease",
+        emoji: "🍋",
+        ideas: [
+          "Drift back to Amalfi before return logistics become the villain",
+          "Lemon dessert or limoncello victory lap after the hilltop views",
+          "Seafood dinner near home base if Ravello already took the day's effort budget",
+        ],
+      },
+    ],
+    exploreLinks: [
+      {
+        label: "Villa Cimbrone / Terrace of Infinity",
+        url: "https://www.villacimbrone.com/en/",
+        note: "The balcony-seats view",
+        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Cimbrone_terraza_infinito_01.jpg",
+        imageAlt: "Terrace of Infinity at Villa Cimbrone",
+      },
+      {
+        label: "Ravello map",
+        url: "https://www.google.com/maps/search/Ravello+Italy/",
+        note: "Hilltop target for today",
+      },
+      {
+        label: "Villa Rufolo",
+        url: "https://www.villarufolo.com/",
+        note: "Gardens and classic Ravello views",
+        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath:Ravello_Villa_Rufolo_2009.jpg",
+        imageAlt: "Villa Rufolo in Ravello",
+      },
+      {
+        label: "Amalfi to Ravello route",
+        url: "https://www.google.com/maps/dir/Amalfi,+Italy/Ravello,+Italy/",
+        note: "Check bus/taxi/walk options before committing",
+      },
+    ],
+    sideQuests: [
+      "🌿 Touch grass in a garden that costs more than your houseplants",
+      "📸 Get the Terrace of Infinity shot without dropping a phone into the void",
+      "🍋 Lemon dessert or limoncello victory lap",
+    ],
+    chaosBonus: "If Ravello makes everyone briefly whisper instead of yap, the hill did its job.",
+  },
+  "2026-05-17": {
+    isoDate: "2026-05-17",
+    headlineOverride: "Beach Club Day 🌊",
+    eyebrow: "Sun / swim / flex day",
+    heroTitle: "Beach Club, Then See What Happens",
+    heroSubtitle: "Sun, water, drinks, and zero need to pretend this was a productivity challenge.",
+    heroImageUrl: amalfiCoastSunset,
+    urgencyLine: "Today was beach club day and it ripped. Anything beyond that should read as optional bonus content, not fake commitments.",
+    suggestionSections: [
+      {
+        label: "Core move",
+        emoji: "🌊",
+        ideas: [
+          "Beach club first. Let the coast do the work.",
+          "Protect the easy, luxurious part of the day instead of overpacking it.",
+          "If the group finds the perfect chair / swim / spritz rhythm, do not interrupt excellence.",
+        ],
+      },
+      {
+        label: "Optional add-ons",
+        emoji: "⛵",
+        ideas: [
+          "Positano if the crew wants the glamorous postcard version after the beach club.",
+          "Minori / Maiori if everyone wants an easier wander without a whole production.",
+          "Ravello if hilltop views sound better than more beach chaos.",
+        ],
+      },
+      {
+        label: "Food / drink wins",
+        emoji: "🍹",
+        ideas: [
+          "Beach club lunch, cold drinks, and anything lemon-forward are already enough of a thesis.",
+          "Seafood dinner is great if the day leaves room for it, not because the itinerary ordered it.",
+          "Dessert should be chosen emotionally, not strategically.",
+        ],
+      },
+      {
+        label: "Evening landing",
+        emoji: "🌅",
+        ideas: [
+          "Sunset from wherever requires the least transit drama",
+          "Low-key dinner if lunch turned into the main event",
+          "Balcony/water-staring decompression is a legitimate itinerary item",
+        ],
+      },
+    ],
+    exploreLinks: [
+      {
+        label: "Positano map",
+        url: "https://www.google.com/maps/search/Positano+Italy/",
+        note: "Postcard-coast wander",
+        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Positano_Amalfi_Coast_Italy.jpg",
+        imageAlt: "Positano on the Amalfi Coast",
+      },
+      {
+        label: "Minori map",
+        url: "https://www.google.com/maps/search/Minori+Italy/",
+        note: "Easier pastry/coast detour",
+      },
+      {
+        label: "Villa Cimbrone / Ravello",
+        url: "https://www.villacimbrone.com/en/",
+        note: "Terrace of Infinity option",
+        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Cimbrone_terraza_infinito_01.jpg",
+        imageAlt: "Terrace of Infinity at Villa Cimbrone",
+      },
+      {
+        label: "Amalfi Coast ferry routes",
+        url: "https://www.travelmar.it/en/",
+        note: "Plan the hop before dinner brain",
+      },
+    ],
+    sideQuests: [
+      "🌊 Fully enjoy the beach club without feeling like you need to optimize it",
+      "🍹 Have one drink that tastes aggressively like vacation",
+      "📸 Get one coast photo that proves today was absurdly good",
+    ],
+    chaosBonus: "If the beach club day was amazing and nobody rushed it for fake productivity, the day was played correctly.",
+  },
+  "2026-05-18": {
+    isoDate: "2026-05-18",
     headlineOverride: "Capri Day",
-    eyebrow: "Island chaos board",
-    heroTitle: "Capri, Showing Off",
-    heroSubtitle: "Ferries, cliffs, blue water, and probably one wildly overpriced spritz.",
+    eyebrow: "Island day",
+    heroTitle: "Capri Is Happening",
+    heroSubtitle: "You made the island move. Now it’s about finishing the day well, not cramming every postcard into one sprint.",
     heroImageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Capri_skaly_Faraglione.JPG",
-    urgencyLine: "Capri can be Blue Grotto, Anacapri, Faraglioni views, or just glamorous wandering. Let sea conditions decide the exact chaos.",
+    urgencyLine: "Capri is the day. Best move now is to pick the strongest remaining beat from where you are and work backward from the return ferry without turning transit into the whole story.",
     suggestionSections: [
       {
         label: "Morning anchors",
         emoji: "🚢",
         ideas: [
-          "Check ferry timing early; Capri rewards people who do not freestyle the return boat",
-          "If Blue Grotto conditions are good, go early before the queue becomes a personality test",
-          "If the grotto is closed, pivot fast: Anacapri + Monte Solaro chairlift is not a consolation prize",
+          "Keep the return ferry time in view; Capri gets annoying when the boat becomes the main character",
+          "If Blue Grotto conditions are good and timing is clean, go for it before the queue turns evil",
+          "If the grotto is closed or annoying, pivot fast: Anacapri + Monte Solaro is still a huge day",
         ],
       },
       {
@@ -255,7 +415,7 @@ export const dailyBits: Record<string, DailyBit> = {
         ideas: [
           "Aperol or limoncello spritz with a view; price pain is part of the ritual",
           "Caprese salad actually on Capri, because geography demands it",
-          "Seafood pasta if the ferry back is late enough to justify staying feral",
+          "Seafood pasta or a long lunch only if it does not make the ferry your enemy",
         ],
       },
     ],
@@ -288,182 +448,96 @@ export const dailyBits: Record<string, DailyBit> = {
     sideQuests: [
       "🚢 Blue Grotto if the sea says yes; graceful pivot if it says absolutely not",
       "📸 Find a view that makes everyone back home insane with jealousy",
-      "💅 Aperol Spritz with a view: mandatory emotional support beverage",
+      "💅 Aperol Spritz with a view because you are literally on Capri",
     ],
     chaosBonus: "If you make the return ferry with everyone accounted for, Capri did not defeat you.",
   },
-  "2026-05-17": {
-    isoDate: "2026-05-17",
-    headlineOverride: "Cooking & Coast Day",
-    eyebrow: "Hands-on / ferry-hop day",
-    heroTitle: "Pasta, Lemons, Sea",
-    heroSubtitle: "Cook something, eat everything, then chase another coastal town if energy allows.",
-    heroImageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/How_to_cut_the_fresh_egg_pasta_with_a_knife_The_art_of_pasta_making_in_Italy.JPG",
-    urgencyLine: "Cooking class is the anchor. The rest of the day can flex around appetite, ferry timing, and how aggressively the coast is calling.",
-    suggestionSections: [
-      {
-        label: "Main anchor",
-        emoji: "👨‍🍳",
-        ideas: [
-          "Cooking class is the day's one real commitment; protect the timing and let the rest breathe",
-          "Ask one technique question you might actually use back home",
-          "If they hand you local wine during prep, the answer is yes unless logistics object",
-        ],
-      },
-      {
-        label: "Coastal add-ons",
-        emoji: "⛵",
-        ideas: [
-          "Ferry-hop to Positano if the crew wants the glamorous postcard version of the coast",
-          "Minori/Maiori can be the easier, less performative wander if everyone is cooked",
-          "Ravello remains the elegant high-ground option if views beat beach chaos",
-        ],
-      },
-      {
-        label: "Food spotlights",
-        emoji: "🍝",
-        ideas: [
-          "Fresh pasta you helped make, ideally with lemon or seafood somewhere in the story",
-          "Delizia al limone for dessert if the coast has not already turned everyone into lemons",
-          "Anchovies, mozzarella, tomatoes, basil: simple things that hit harder here",
-        ],
-      },
-      {
-        label: "Evening ideas",
-        emoji: "🌅",
-        ideas: [
-          "Sunset from wherever requires the least transit drama",
-          "Low-key seafood dinner if lunch turned into a whole event",
-          "Balcony/water-staring decompression is a legitimate itinerary item",
-        ],
-      },
-    ],
-    exploreLinks: [
-      {
-        label: "Positano map",
-        url: "https://www.google.com/maps/search/Positano+Italy/",
-        note: "Postcard-coast wander",
-        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Positano_Amalfi_Coast_Italy.jpg",
-        imageAlt: "Positano on the Amalfi Coast",
-      },
-      {
-        label: "Minori map",
-        url: "https://www.google.com/maps/search/Minori+Italy/",
-        note: "Easier pastry/coast detour",
-      },
-      {
-        label: "Villa Cimbrone / Ravello",
-        url: "https://www.villacimbrone.com/en/",
-        note: "Terrace of Infinity option",
-        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Cimbrone_terraza_infinito_01.jpg",
-        imageAlt: "Terrace of Infinity at Villa Cimbrone",
-      },
-      {
-        label: "Amalfi Coast ferry routes",
-        url: "https://www.travelmar.it/en/",
-        note: "Plan the hop before dinner brain",
-      },
-    ],
-    sideQuests: [
-      "👨‍🍳 Learn one technique you'll actually remember",
-      "🍷 Pair something with local wine and pretend this is educational",
-      "⛵ Ferry-hop or view-hop to one extra coastal town if energy survives lunch",
-    ],
-    chaosBonus: "If somebody says 'we could make this at home' while staring at the Mediterranean, they are lying but let them dream.",
-  },
-  "2026-05-18": {
-    isoDate: "2026-05-18",
-    headlineOverride: "Coast Recovery Day",
-    eyebrow: "Rest day, allegedly",
-    heroTitle: "Do Less, Better",
-    heroSubtitle: "Beach, balcony, seafood, lemons, and no fake productivity unless the crew wants it.",
-    heroImageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Ferry_Ride_Between_Amalfi_and_Positano_(42250218604).jpg",
-    urgencyLine: "This is the buffer day. Use it for rest, one perfect coastal move, or the thing everyone wishes they had done earlier.",
-    suggestionSections: [
-      {
-        label: "Slow morning",
-        emoji: "😴",
-        ideas: [
-          "Sleep in if bodies are voting no; the site officially endorses not being heroic",
-          "Coffee with a view before making even one decision",
-          "Laundry / repack / life admin only if it buys future peace",
-        ],
-      },
-      {
-        label: "Pick-one adventures",
-        emoji: "🌊",
-        ideas: [
-          "Beach or swim stop if the weather is showing off",
-          "Ravello / Terrace of Infinity if the crew never made it uphill",
-          "Short ferry ride just to see the coast from water without turning it into a mission",
-        ],
-      },
-      {
-        label: "Food spotlights",
-        emoji: "🦐",
-        ideas: [
-          "Seafood dinner with something you cannot pronounce but can point at confidently",
-          "Lemon dessert victory lap: delizia, granita, limoncello, dealer's choice",
-          "Pizza or pasta comfort meal if everyone is travel-tired and done being impressive",
-        ],
-      },
-      {
-        label: "Reset for Florence",
-        emoji: "🎒",
-        ideas: [
-          "Confirm tomorrow's departure plan before the final coastal spritz",
-          "Charge batteries, clear storage, rescue camera roll chaos",
-          "One last coastline check-in/photo so Amalfi gets its proper goodbye",
-        ],
-      },
-    ],
-    exploreLinks: [
-      {
-        label: "Atrani map",
-        url: "https://www.google.com/maps/search/Atrani+Italy/",
-        note: "Tiny, nearby, beautiful wander",
-        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Atrani_-_panoramio.jpg",
-        imageAlt: "Atrani on the Amalfi Coast",
-      },
-      {
-        label: "Ravello map",
-        url: "https://www.google.com/maps/search/Ravello+Italy/",
-        note: "Best if you still need the balcony seats",
-      },
-      {
-        label: "Amalfi beaches map",
-        url: "https://www.google.com/maps/search/beach+near+Amalfi+Italy/",
-        note: "Low-effort recovery target",
-      },
-      {
-        label: "Florence transfer prep",
-        url: "https://www.trenitalia.com/en.html",
-        note: "Tomorrow-you says thank you",
-      },
-    ],
-    sideQuests: [
-      "😴 Sleep past 8am (this is the mission)",
-      "🏖️ Find your version of a perfect lazy Italian afternoon",
-      "🥂 Seafood dinner — something you can't pronounce",
-    ],
-    chaosBonus: "If the only achievement is one great meal and one great view, that's not failure. That's vacation literacy.",
-  },
   "2026-05-19": {
     isoDate: "2026-05-19",
-    urgencyLine: "Florence arrival. Napoli 12:10 → Firenze SMN 15:11, then Costa dei Magnoli, 19.",
-    sideQuests: [
-      "🚆 Train departs Napoli 12:10 — do NOT miss it",
-      "🏡 Check into Costa dei Magnoli, 19",
-      "🍷 First Chianti of the Tuscany leg",
+    headlineOverride: "Florence Arrival",
+    eyebrow: "Arrival + culture plays",
+    heroTitle: "Florence Has Some Weirdly Strong Options Tonight",
+    heroSubtitle: "Get in, drop bags, then pick the kind of brain-melt you actually want: Dante hell-room, Rothko color fields, or a Villa Bardini art-history detour.",
+    heroImageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Palazzo_strozzi_22.JPG",
+    urgencyLine: "Florence arrival. Napoli 12:10 → Firenze SMN 15:11, then Costa dei Magnoli, 19. After that, tonight has real optional culture plays instead of generic wandering.",
+    suggestionSections: [
+      {
+        label: "Hard anchors",
+        emoji: "🚆",
+        ideas: [
+          "Napoli Centrale 12:10 → Firenze SMN 15:11 on Frecciarossa 9422",
+          "Check into Costa dei Magnoli, 19",
+          "Keep arrival friction low before choosing any evening mission",
+        ],
+      },
+      {
+        label: "Strong culture plays",
+        emoji: "🎭",
+        ideas: [
+          "Cattedrale dell'Immagine — INFERNO: immersive Dante in a deconsecrated church near Ponte Vecchio, open until 19:00 with last entry at 18:00",
+          "Rothko in Florence at Palazzo Strozzi: 70+ works, big emotional color-field / Renaissance-space connection, open until 20:00",
+          "Firenze negli anni di Rothko at Villa Bardini: one-night 18:00 event tied to Florence in Rothko's era, seats first come",
+        ],
+      },
+      {
+        label: "Pick by energy",
+        emoji: "🧭",
+        ideas: [
+          "If you want strange and immersive: INFERNO",
+          "If you want the most serious art flex: Rothko at Palazzo Strozzi",
+          "If timing lines up and you want a one-night-only thing: Villa Bardini at 18:00",
+        ],
+      },
     ],
+    exploreLinks: [
+      {
+        label: "Cattedrale dell'Immagine — INFERNO",
+        url: "https://www.cattedraledellimmagine.it/",
+        note: "Immersive Dante venue near Ponte Vecchio",
+      },
+      {
+        label: "INFERNO hours / tickets info",
+        url: "https://www.cattedraledellimmagine.it/biglietti-e-orari-2/",
+        note: "Today: 10:00-19:00, last entry 18:00",
+      },
+      {
+        label: "INFERNO tickets",
+        url: "https://cattedraledellimmagine.vivaticket.it/",
+        note: "Ticketing via Vivaticket",
+      },
+      {
+        label: "Rothko in Florence",
+        url: "https://www.palazzostrozzi.org/en/exhibition/mark-rothko/",
+        note: "Palazzo Strozzi, 70+ works, open until 20:00",
+        imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Palazzo_strozzi_22.JPG",
+        imageAlt: "Palazzo Strozzi in Florence",
+      },
+      {
+        label: "Rothko tickets",
+        url: "https://palazzostrozzi.vivaticket.it/",
+        note: "Palazzo Strozzi ticketing",
+      },
+      {
+        label: "Firenze negli anni di Rothko",
+        url: "https://www.palazzostrozzi.org/evento/firenze-negli-anni-di-rothko/",
+        note: "Tonight at 18:00, Villa Bardini",
+      },
+    ],
+    sideQuests: [
+      "🚆 Make the Napoli 12:10 train without turning checkout into a war crime",
+      "🏡 Check into Costa dei Magnoli, 19",
+      "🎭 Pick one Florence culture play if arrival energy allows",
+      "🍨 Take one first-night Florence gelato walk after the serious stuff",
+    ],
+    chaosBonus: "If Florence casually offers Dante's Inferno, Rothko, and a Villa Bardini side quest on arrival night, the city is already showing off.",
   },
   "2026-05-20": {
     isoDate: "2026-05-20",
-    urgencyLine: "Art and sunset day. Pick ONE museum and give it your full soul.",
+    urgencyLine: "Art and sunset day. One museum is plenty; the rest can stay loose.",
     sideQuests: [
-      "🎨 Accademia (David) or Uffizi — commit to your choice",
-      "🌅 Piazzale Michelangelo sunset is non-negotiable",
-      "🍽️ Dinner in Oltrarno: find the place with no English menu",
+      "🎨 Accademia (David) or Uffizi — pick one and let that be enough",
+      "🌅 Piazzale Michelangelo sunset if the day still has legs",
+      "🍽️ Oltrarno dinner or any place that feels obviously right",
     ],
   },
   "2026-05-21": {
@@ -471,26 +545,145 @@ export const dailyBits: Record<string, DailyBit> = {
     urgencyLine: "Rental car day. Pickup is Via Maso Finiguerra 31 R near Firenze SMN, then onward to Castelmuzio.",
     sideQuests: [
       "🚗 Rental car pickup at Via Maso Finiguerra 31 R",
-      "🏡 Get to Castelmuzio and immediately sit outside with wine",
+      "🏡 Get to Castelmuzio and settle in without overbooking the first night",
       "🌄 Sunset over the hills is literally a screensaver",
     ],
   },
   "2026-05-22": {
     isoDate: "2026-05-22",
-    urgencyLine: "Vespa day. This is either the best or worst decision. Probably both.",
-    sideQuests: [
-      "🛵 Vespa through Pienza + Montepulciano — don't crash",
-      "🍷 Winery lunch with actual wine pairings",
-      "📸 Get the photo that will live on someone's wall",
+    headlineOverride: "Wine Tasting Day 🍷",
+    eyebrow: "Val d'Orcia wine country",
+    heroTitle: "Wine Country, Properly",
+    heroSubtitle: "Vino Nobile, Tuscan food logic, and one very specific pizza bit on the side.",
+    heroImageUrl: "/tuscany/pienza-hills.jpg",
+    urgencyLine: "Today is wine tasting day. Let the tasting do the teaching: grape, hill, aging, food pairing, and why this part of Tuscany tastes like this. Bitcoin Pizza Day stays a tiny side quest.",
+    suggestionSections: [
+      {
+        label: "Region lens",
+        emoji: "🧭",
+        ideas: [
+          "Val d'Orcia is the UNESCO postcard version of Tuscany: cypress lines, clay hills, wheat fields, and towns built to look good from a distance",
+          "Montepulciano is the wine/history anchor: Vino Nobile, steep stone lanes, and a town built around patience",
+          "The useful tasting question: what does this wine do with Tuscan food that it would not do alone?",
+        ],
+      },
+      {
+        label: "Tasting lens",
+        emoji: "🍷",
+        ideas: [
+          "Vino Nobile di Montepulciano is mostly Sangiovese here, traditionally called Prugnolo Gentile",
+          "Notice the difference between fruit, earth, tannin, and oak instead of trying to sound like a sommelier",
+          "If there is a cellar or vineyard view, ask what changed between the old way and the current way",
+        ],
+      },
+      {
+        label: "Food / culture notes",
+        emoji: "🍝",
+        ideas: [
+          "Pecorino di Pienza is the local cheese thread; it belongs next to honey, pear, or whatever the server insists on",
+          "Pici is the local pasta shape: thick, hand-rolled, usually better with simple sauce than fancy theater",
+          "Pizza is not the regional star here, which makes the Bitcoin Pizza Day tribute funnier and more specific",
+        ],
+      },
     ],
+    exploreLinks: [
+      {
+        label: "Val d'Orcia UNESCO",
+        url: "https://whc.unesco.org/en/list/1026/",
+        note: "Why this landscape looks intentionally cinematic",
+        imageUrl: "/tuscany/pienza-hills.jpg",
+        imageAlt: "Rolling hills in Val d'Orcia",
+      },
+      {
+        label: "Pienza overview",
+        url: "https://www.visittuscany.com/en/towns-and-villages/pienza/",
+        note: "Renaissance ideal-city context",
+      },
+      {
+        label: "Montepulciano",
+        url: "https://www.visittuscany.com/en/towns-and-villages/montepulciano/",
+        note: "Hill town + Vino Nobile primer",
+      },
+      {
+        label: "Bagno Vignoni",
+        url: "https://www.visittuscany.com/en/towns-and-villages/bagno-vignoni/",
+        note: "Thermal-pool piazza curiosity",
+      },
+    ],
+    sideQuests: [
+      "🍷 Learn one specific thing about the wine you're tasting",
+      "🧀 Pair something local with the wine: pecorino, pici, salumi, or whatever the table demands",
+      "🍕 Bitcoin Pizza Day tribute: split a pizza somewhere the girls will tolerate",
+    ],
+    chaosBonus: "If the pizza costs less than 10,000 BTC, you are technically outperforming history.",
   },
   "2026-05-23": {
     isoDate: "2026-05-23",
-    urgencyLine: "Balloon ride if the weather cooperates. Otherwise: more hill towns and wine.",
+    headlineOverride: "Vespa Day 🛵",
+    eyebrow: "Pienza / hill-town roads",
+    heroTitle: "Vespa Through Tuscany",
+    heroSubtitle: "Hill-town roads, Renaissance geometry, clay hills, and the slowest possible version of speed.",
+    heroImageUrl: "/tuscany/crete-senesi.jpg",
+    urgencyLine: "Tomorrow is Vespa day. Keep the inspiration regional: Pienza's ideal-city bones, Val d'Orcia roads, Crete Senesi clay hills, and one good stop rather than a checklist.",
+    suggestionSections: [
+      {
+        label: "Region lens",
+        emoji: "🧭",
+        ideas: [
+          "Pienza was rebuilt by Pope Pius II as a Renaissance 'ideal city,' which is why the tiny center feels unusually composed",
+          "Val d'Orcia roads are the classic cypress-and-hill visual language; the point is the space between towns, not only the towns",
+          "The Crete Senesi are Tuscany's clay hills: softer, stranger, and more moonlike than the postcard version",
+        ],
+      },
+      {
+        label: "Vespa lens",
+        emoji: "🛵",
+        ideas: [
+          "The win is not distance; it is moving slowly enough that the landscape becomes the activity",
+          "Pienza plus one nearby stop is stronger than turning the ride into a scavenger hunt",
+          "Bagno Vignoni is a good curiosity stop if the route wants a weird little hook: the main square is a thermal pool",
+        ],
+      },
+      {
+        label: "Food / stop ideas",
+        emoji: "🍝",
+        ideas: [
+          "Pecorino di Pienza is the obvious local bite; it is worth tasting where it actually belongs",
+          "Pici is the local pasta shape: thick, hand-rolled, and usually best when the sauce stays simple",
+          "Best version of the day is probably simple: road, view, one town, pasta, no spreadsheet",
+        ],
+      },
+    ],
+    exploreLinks: [
+      {
+        label: "Crete Senesi",
+        url: "https://www.visittuscany.com/en/areas/crete-senesi/",
+        note: "Clay hills and lunar-landscape context",
+        imageUrl: "/tuscany/crete-senesi.jpg",
+        imageAlt: "Clay hills in the Crete Senesi",
+      },
+      {
+        label: "Montalcino",
+        url: "https://www.visittuscany.com/en/towns-and-villages/montalcino/",
+        note: "Brunello town and fortress views",
+      },
+      {
+        label: "Abbey of Sant'Antimo",
+        url: "https://www.antimo.it/en/",
+        note: "Quiet Romanesque abbey near Montalcino",
+        imageUrl: "/tuscany/sant-antimo.jpg",
+        imageAlt: "Abbey of Sant'Antimo in Tuscany",
+      },
+      {
+        label: "San Quirico d'Orcia",
+        url: "https://www.visittuscany.com/en/towns-and-villages/san-quirico-dorcia/",
+        note: "Small-town walk + classic Val d'Orcia roads",
+      },
+    ],
     sideQuests: [
-      "🎈 Sunrise balloon (weather permitting) — say yes if they say go",
-      "🏘️ Visit one hill town you haven't been to yet",
-      "🍾 Farewell Tuscan dinner: make it count",
+      "🛵 Vespa through Pienza / Val d'Orcia if weather and confidence make it fun",
+      "🏘️ Learn one tiny thing about Pienza or whichever town you actually stop in",
+      "📸 Get one road/view photo that feels impossible to recreate at home",
     ],
   },
   "2026-05-24": {
@@ -505,23 +698,23 @@ export const dailyBits: Record<string, DailyBit> = {
   },
   "2026-05-25": {
     isoDate: "2026-05-25",
-    urgencyLine: "Village-hop day. Manarola sunset is mandatory. Everything else is bonus.",
+    urgencyLine: "Village-hop day. Manarola sunset is a strong candidate, not a courtroom order.",
     sideQuests: [
-      "🚉 Train through all five villages minimum",
-      "🌅 Manarola sunset — this is the one",
+      "🚉 Train through as many villages as actually sounds fun",
+      "🌅 Manarola sunset if it still feels like the clear winner later",
       "🦞 Fresh seafood dinner with the whole crew",
     ],
   },
   "2026-05-26": {
     isoDate: "2026-05-26",
-    urgencyLine: "Venice. Return the car in La Spezia, train via Florence, then 8:20pm gondola. Do not freestyle this one.",
+    urgencyLine: "Venice transfer day. Car return + trains are the hard commitments; once you land, keep the evening easy around the 8:20pm gondola.",
     sideQuests: [
       "🚗 Return the rental car in La Spezia",
       "🚆 La Spezia Centrale 12:35 → Firenze SMN 15:08, Regional 18413, PNR JU7ZC5",
       "🚆 Firenze SMN → Venezia Santa Lucia second train — details TBD",
       "🏨 Check into Canal Grande",
-      "🥂 Cicchetti crawl: eat everything you see",
-      "🚣 8:20pm gondola ride — non-negotiable, already paid for",
+      "🥂 Cicchetti crawl if there is still appetite for one more adventure",
+      "🚣 8:20pm gondola ride — the actual anchor tonight",
     ],
     chaosBonus: "Final Italian dinner with Prosecco. Make a toast. Make it good.",
   },

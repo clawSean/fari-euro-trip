@@ -11,6 +11,7 @@ import {
 import heroImage from "@assets/generated_images/amalfi_coast_sunset_view.png";
 import { SpotlightSection } from "@/components/spotlight-section";
 import { NowMode } from "@/components/now-mode";
+import { ConfettiBurst } from "@/components/confetti-burst";
 import { dailyBits } from "@/data/daily-bits";
 import { useTripPhase } from "@/hooks/use-trip-phase";
 
@@ -161,36 +162,6 @@ function TimeSeparator() {
     <div className="flex flex-col items-center justify-center gap-2 text-white/60 self-start mt-4">
       <div className="w-2 h-2 rounded-full bg-white/40" />
       <div className="w-2 h-2 rounded-full bg-white/40" />
-    </div>
-  );
-}
-
-function Confetti() {
-  const colors = ['#009246', '#ffffff', '#CE2B37', '#FFD700', '#FF6B6B'];
-  const confetti = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    color: colors[i % colors.length],
-    left: `${Math.random() * 100}%`,
-    delay: `${Math.random() * 2}s`,
-    size: Math.random() * 10 + 5,
-  }));
-
-  return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
-      {confetti.map((piece) => (
-        <div
-          key={piece.id}
-          className="absolute animate-confetti"
-          style={{
-            left: piece.left,
-            animationDelay: piece.delay,
-            width: piece.size,
-            height: piece.size,
-            backgroundColor: piece.color,
-            borderRadius: Math.random() > 0.5 ? '50%' : '0',
-          }}
-        />
-      ))}
     </div>
   );
 }
@@ -552,24 +523,24 @@ const itinerary: ItineraryDay[] = [
     date: "May 16",
     isoDate: "2026-05-16",
     location: "Amalfi Coast",
-    title: "Capri Day Trip",
+    title: "Ravello Day",
     activities: [
-      "Ferry to Capri for a full day trip",
-      "Explore the island, Blue Grotto & Gardens of Augustus",
-      "Ferry back to Amalfi in the evening"
+      "Head up to Ravello for hilltop gardens and coastline views",
+      "Villa Cimbrone / Terrace of Infinity or Villa Rufolo",
+      "Return to Amalfi for a relaxed coastal evening"
     ],
-    icon: Ship
+    icon: Mountain
   },
   {
     day: 5,
     date: "May 17",
     isoDate: "2026-05-17",
     location: "Amalfi Coast",
-    title: "Cooking & Coastal Towns",
+    title: "Beach Club & Coast Flex",
     activities: [
-      "Half-day cooking class in Amalfi",
-      "Afternoon ferry-hopping to nearby coastal towns",
-      "Evening passeggiata and seafood dinner"
+      "Beach club day if sun-and-water mode wins",
+      "Optional coastal town hop or view change if the crew still has juice",
+      "Easy sunset dinner / passeggiata wherever the day leaves you"
     ],
     icon: Sun
   },
@@ -578,24 +549,24 @@ const itinerary: ItineraryDay[] = [
     date: "May 18",
     isoDate: "2026-05-18",
     location: "Amalfi Coast",
-    title: "Rest & Relaxation",
+    title: "Capri Day",
     activities: [
-      "Rest day — sleep in, beach time, or a leisurely walk",
-      "Explore at your own pace",
-      "Relaxed evening dinner on the coast"
+      "Capri day trip is on",
+      "Blue Grotto, Anacapri, Gardens of Augustus, or just glamorous wandering depending on how the day unfolds",
+      "Work backward from the return ferry and keep one strong last move in the tank"
     ],
-    icon: Sun
+    icon: Ship
   },
   {
     day: 7,
     date: "May 19",
     isoDate: "2026-05-19",
     location: "Florence",
-    title: "Renaissance Heart - Arrival",
+    title: "Florence Arrival",
     activities: [
       "Train: Napoli Centrale 12:10 → Firenze SMN 15:11 (Frecciarossa 9422)",
       "Check into Costa dei Magnoli, 19",
-      "Evening walk and dinner in the historic center"
+      "Evening Florence options: INFERNO immersive Dante, Rothko at Palazzo Strozzi, or the Rothko-linked Villa Bardini talk"
     ],
     icon: Church
   },
@@ -604,12 +575,12 @@ const itinerary: ItineraryDay[] = [
     date: "May 20",
     isoDate: "2026-05-20",
     location: "Florence",
-    title: "Art & Sunset Views",
+    title: "Art / Sunset Flex",
     activities: [
-      "Duomo exterior visit",
-      "ONE museum: Accademia (David) or Uffizi Gallery",
-      "Sunset at Piazzale Michelangelo",
-      "Dinner in Oltrarno"
+      "Duomo exterior or general city wandering",
+      "One museum max: Accademia (David) or Uffizi Gallery",
+      "Piazzale Michelangelo at sunset if that still feels like the move",
+      "Dinner in Oltrarno or wherever the day naturally lands"
     ],
     icon: Landmark
   },
@@ -618,12 +589,12 @@ const itinerary: ItineraryDay[] = [
     date: "May 21",
     isoDate: "2026-05-21",
     location: "Tuscany",
-    title: "Val d'Orcia - Arrival",
+    title: "Val d'Orcia Arrival",
     activities: [
       "Pick up rental car: Via Maso Finiguerra 31 R, near Firenze SMN",
       "Drive to Castelmuzio",
-      "Explore the area and settle in",
-      "Dinner with local wine pairings"
+      "Explore the area, settle in, and keep the first evening light",
+      "Dinner with wine if everyone wants the soft landing"
     ],
     icon: Wine
   },
@@ -632,12 +603,13 @@ const itinerary: ItineraryDay[] = [
     date: "May 22",
     isoDate: "2026-05-22",
     location: "Tuscany",
-    title: "Vespa Day",
+    title: "Wine Tasting + Bitcoin Pizza Day",
     activities: [
-      "Full-day Vespa ride through Pienza & Montepulciano",
-      "Winery lunch with tastings",
-      "Explore charming hill towns",
-      "Evening stroll through Val d'Orcia"
+      "Wine tasting day: learn one concrete thing about the grapes, hills, aging, or pairing",
+      "Montepulciano / Vino Nobile context if the tasting points that direction",
+      "Pecorino, pici, salumi, or whatever local food makes the wine make sense",
+      "Bitcoin Pizza Day tribute: find a small pizza moment without making it the whole day",
+      "Photo stops whenever wine country starts showing off"
     ],
     icon: Wine
   },
@@ -646,12 +618,13 @@ const itinerary: ItineraryDay[] = [
     date: "May 23",
     isoDate: "2026-05-23",
     location: "Tuscany",
-    title: "Balloon Ride & Hill Towns",
+    title: "Vespa / Hill-Town Roads",
     activities: [
-      "Sunrise hot air balloon ride (weather permitting)",
-      "Visit more hill towns at your own pace",
-      "Winery lunch",
-      "Farewell Tuscan dinner"
+      "Vespa day through Pienza / Val d'Orcia if weather and confidence make it fun",
+      "Pienza context: Renaissance ideal-city wandering, plus pecorino if the town starts feeding you",
+      "Crete Senesi / Val d'Orcia context: clay hills, cypress roads, and tiny medieval towns",
+      "Pick one slow stop rather than collecting towns like errands",
+      "Farewell Tuscan dinner without overengineering it"
     ],
     icon: Sun
   },
@@ -660,12 +633,12 @@ const itinerary: ItineraryDay[] = [
     date: "May 24",
     isoDate: "2026-05-24",
     location: "Cinque Terre",
-    title: "Villages of the Coast - Arrival",
+    title: "Cinque Terre Arrival",
     activities: [
       "Drive Tuscany → Monterosso al Mare (~2.5–3 hrs)",
       "Parking confirmed at accommodation",
       "Check into Monterosso al Mare, Via Roma 33",
-      "Evening exploring the village"
+      "First village wander if arrival energy still exists"
     ],
     icon: Ship
   },
@@ -674,12 +647,12 @@ const itinerary: ItineraryDay[] = [
     date: "May 25",
     isoDate: "2026-05-25",
     location: "Cinque Terre",
-    title: "Village Hopping & Sunset",
+    title: "Village Hopping / Beach Flex",
     activities: [
-      "Village hopping by train through the five towns",
-      "Relaxed coastal morning and beach time",
-      "Sunset in Manarola",
-      "Fresh seafood dinner"
+      "Train-hop through as many villages as actually sounds fun",
+      "Beach time or slow coastal morning if the crew wants less motion",
+      "Manarola sunset if that becomes the clear winner",
+      "Fresh seafood dinner somewhere with zero pressure"
     ],
     icon: Mountain
   },
@@ -688,13 +661,13 @@ const itinerary: ItineraryDay[] = [
     date: "May 26",
     isoDate: "2026-05-26",
     location: "Venice",
-    title: "City of Canals - Finale",
+    title: "Venice Arrival & Finale",
     activities: [
       "Return rental car in La Spezia",
       "Train 1: La Spezia Centrale 12:35 → Firenze SMN 15:08 (Regional 18413, PNR JU7ZC5)",
       "Train 2: Firenze SMN → Venezia Santa Lucia (details TBD)",
       "Check into Canal Grande",
-      "Cicchetti crawl and evening canal wandering",
+      "Cicchetti crawl and canal wandering if there is still gas in the tank",
       "8:20pm gondola ride (booked)",
       "Final Italian dinner with Prosecco"
     ],
@@ -983,7 +956,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {showConfetti && <Confetti />}
+      {showConfetti && <ConfettiBurst pieceCount={90} />}
       
       {/* Hero Section */}
       <section className={`relative ${tripPhase.phase === 'active' ? 'min-h-[56vh] sm:min-h-[62vh]' : 'h-[85vh] min-h-[600px]'} flex items-center justify-center overflow-hidden`}>
