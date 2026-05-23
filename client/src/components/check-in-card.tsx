@@ -56,7 +56,7 @@ const JPEG_QUALITY = 0.65;
 const MAX_COMPRESSED_BYTES = 300 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
 
-function toIsoDate(value: unknown) {
+export function toIsoDate(value: unknown) {
   if (!value) return null;
 
   const date = value instanceof Date ? value : new Date(String(value));
@@ -100,7 +100,7 @@ function getNickname() {
   return localStorage.getItem("chat-nickname") || "Trip Crew";
 }
 
-function getDefaultCheckIns(location: string) {
+export function getDefaultCheckIns(location: string) {
   if (location === "Rome") return romeCheckIns;
   return [
     { label: location, emoji: "📍", message: `Checked in at ${location} 📍` },
@@ -153,7 +153,7 @@ function getCheckInPreviewLines(message: string) {
     .filter((line) => !line.startsWith("📍 Trip check-in ·"));
 }
 
-function parseMapsLine(line: string) {
+export function parseMapsLine(line: string) {
   const match = line.match(/(https:\/\/maps\.google\.com\/\?q=[^\s]+)(?:\s*·\s*(.*))?/);
   if (!match) return null;
   return {
@@ -220,6 +220,24 @@ function formatPhotoTakenAt(date: Date | string) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+export function getCheckInMessage({
+  customPlace,
+  pendingMessage,
+  hasAttachedPhotoLocation,
+  location,
+}: {
+  customPlace: string;
+  pendingMessage?: string | null;
+  hasAttachedPhotoLocation: boolean;
+  location: string;
+}) {
+  const place = customPlace.trim();
+  if (place) return `Checked in at ${place} 📍`;
+  if (pendingMessage) return pendingMessage;
+  if (hasAttachedPhotoLocation) return "Photo location check-in 📍";
+  return `Checked in at ${location} 📍`;
 }
 
 export function CheckInCard({ location, isoDate }: CheckInCardProps) {
@@ -363,11 +381,12 @@ export function CheckInCard({ location, isoDate }: CheckInCardProps) {
   };
 
   const getPendingMessage = () => {
-    const place = customPlace.trim();
-    if (place) return `Checked in at ${place} 📍`;
-    if (pendingCheckIn) return pendingCheckIn.message;
-    if (hasAttachedPhotoLocation) return "Photo location check-in 📍";
-    return `Checked in at ${location} 📍`;
+    return getCheckInMessage({
+      customPlace,
+      pendingMessage: pendingCheckIn?.message,
+      hasAttachedPhotoLocation,
+      location,
+    });
   };
 
   const postCheckIn = () => {

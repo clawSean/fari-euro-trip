@@ -8,6 +8,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { X, Send, User } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { ChatMessage } from "@shared/schema";
+import {
+  normalizeHref,
+  splitUrlTrailingPunctuation,
+  URL_PART_PATTERN,
+} from "./chat-box.logic";
 import gelatoIcon from "@assets/14E66A51-6306-4DBD-B316-9765CD873462_1764565746408.png";
 
 import pizzaAvatar from "@assets/generated_images/kawaii_pizza_slice_avatar.png";
@@ -53,24 +58,6 @@ function getAvatarImage(nickname: string) {
 
 function isTripCheckIn(message: ChatMessage) {
   return message.message.includes("📍 Trip check-in ·");
-}
-
-const URL_PART_PATTERN = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
-const TRAILING_URL_PUNCTUATION_PATTERN = /[.,!?;:)]*$/;
-
-function splitUrlTrailingPunctuation(value: string) {
-  const punctuation = value.match(TRAILING_URL_PUNCTUATION_PATTERN)?.[0] ?? "";
-  if (!punctuation) {
-    return { urlText: value, trailing: "" };
-  }
-  return {
-    urlText: value.slice(0, -punctuation.length),
-    trailing: punctuation,
-  };
-}
-
-function normalizeHref(value: string) {
-  return value.startsWith("www.") ? `https://${value}` : value;
 }
 
 function LinkifiedMessage({ text }: { text: string }) {
