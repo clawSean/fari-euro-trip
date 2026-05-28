@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 const TRIP_START_ISO = "2026-05-13";
 const TRIP_END_ISO = "2026-05-27";
+const POSTTRIP_DEFAULT_ISO = TRIP_END_ISO;
 
 function getRomeIsoDate(): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date());
@@ -21,11 +22,13 @@ export function useTripPhase<T extends { isoDate: string }>(
     const params = new URLSearchParams(window.location.search);
     const dayOverride = params.get("day");
     const dateOverride = params.get("date");
+    let hasExplicitOverride = false;
 
     let isoDate: string;
 
     if (dateOverride && /^\d{4}-\d{2}-\d{2}$/.test(dateOverride)) {
       isoDate = dateOverride;
+      hasExplicitOverride = true;
     } else if (dayOverride) {
       const dayNum = parseInt(dayOverride, 10);
       if (!isNaN(dayNum) && dayNum >= 1 && dayNum <= itinerary.length) {
@@ -33,11 +36,17 @@ export function useTripPhase<T extends { isoDate: string }>(
           a.isoDate.localeCompare(b.isoDate)
         );
         isoDate = sorted[dayNum - 1]?.isoDate ?? getRomeIsoDate();
+        hasExplicitOverride = true;
       } else {
         isoDate = getRomeIsoDate();
       }
     } else {
       isoDate = getRomeIsoDate();
+    }
+
+    // Keep the final live-trip view shareable after the calendar trip ends.
+    if (!hasExplicitOverride && isoDate > TRIP_END_ISO) {
+      isoDate = POSTTRIP_DEFAULT_ISO;
     }
 
     let phase: "pretrip" | "active" | "posttrip";

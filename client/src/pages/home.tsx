@@ -404,13 +404,16 @@ function ShareButton({ daysLeft, targetDate }: { daysLeft: number; targetDate: s
 
   const handleShare = async () => {
     const baseUrl = window.location.origin + window.location.pathname;
-    const shareUrl = `${baseUrl}?date=${encodeURIComponent(targetDate)}`;
-    const shareText = `Only ${daysLeft} days until our Italy trip! Join the countdown!`;
+    const shareUrl = daysLeft > 0 ? `${baseUrl}?date=${encodeURIComponent(targetDate)}` : baseUrl;
+    const shareText =
+      daysLeft > 0
+        ? `Only ${daysLeft} days until our Italy trip! Join the countdown!`
+        : "Click through the Italy trip days and location notes.";
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Italy Trip Countdown',
+          title: daysLeft > 0 ? 'Italy Trip Countdown' : 'Italy Trip',
           text: shareText,
           url: shareUrl,
         });
@@ -462,7 +465,7 @@ function ShareButton({ daysLeft, targetDate }: { daysLeft: number; targetDate: s
       onClick={handleShare}
       className={`glass-effect text-white border-white/20 h-11 w-11 p-0 ${error ? 'border-red-500/50' : ''}`}
       data-testid="button-share"
-      aria-label={copied ? "Link copied!" : error ? "Copy failed" : "Share countdown"}
+      aria-label={copied ? "Link copied!" : error ? "Copy failed" : daysLeft > 0 ? "Share countdown" : "Share trip guide"}
     >
       {copied ? <Check className="w-5 h-5 text-green-400" /> : error ? <Copy className="w-5 h-5 text-red-400" /> : <Share2 className="w-5 h-5" />}
     </Button>
