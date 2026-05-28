@@ -708,6 +708,29 @@ export const dailyBits: Record<string, DailyBit> = {
   "2026-05-26": {
     isoDate: "2026-05-26",
     urgencyLine: "Venice transfer day. Car return + trains are the hard commitments; once you land, keep the evening easy around the 8:20pm gondola.",
+    suggestionSections: [
+      {
+        label: "Low-effort Venice wins",
+        emoji: "🛶",
+        ideas: [
+          "Let the first Venice walk be a wander, not a mission; the city works best when you get mildly lost",
+          "Cicchetti plus a spritz near the hotel is the ideal arrival-night difficulty setting",
+          "If energy is low, save the ambitious sightseeing and just make the gondola the moment",
+        ],
+      },
+    ],
+    exploreLinks: [
+      {
+        label: "Rialto Market",
+        url: "https://www.veneziaunica.it/en/content/rialto-market",
+        note: "Classic morning-market wander if Venice gives you a little extra time",
+      },
+      {
+        label: "Cicchetti guide",
+        url: "https://www.visitvenezia.eu/en/venetianity/taste-veneto/venetian-cicchetti",
+        note: "Tiny bar snacks, small glasses, zero need to over-plan dinner",
+      },
+    ],
     sideQuests: [
       "🚗 Return the rental car in La Spezia",
       "🚆 La Spezia Centrale 12:35 → Firenze SMN 15:08, Regional 18413, PNR JU7ZC5",
@@ -721,6 +744,29 @@ export const dailyBits: Record<string, DailyBit> = {
   "2026-05-27": {
     isoDate: "2026-05-27",
     urgencyLine: "Departure day. Last morning in Venice. Soak it up before real life resumes.",
+    suggestionSections: [
+      {
+        label: "Last-morning Venice",
+        emoji: "☕",
+        ideas: [
+          "Do one tiny canal loop before checkout; Venice rewards the ten-minute detour",
+          "Grab coffee somewhere with standing-room energy instead of turning breakfast into an ordeal",
+          "If there is one final postcard moment, make it a bridge view or vaporetto glance, not a rushed museum",
+        ],
+      },
+    ],
+    exploreLinks: [
+      {
+        label: "Grand Canal",
+        url: "https://www.veneziaunica.it/en/content/grand-canal",
+        note: "The obvious goodbye view, and still the correct one",
+      },
+      {
+        label: "Santa Lucia station",
+        url: "https://www.veneziaunica.it/en/content/venice-santa-lucia-railway-station",
+        note: "Departure logistics without killing the mood",
+      },
+    ],
     sideQuests: [
       "☕ One last proper Italian coffee",
       "📦 Repack your bag with all the things you bought",
