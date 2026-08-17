@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Initial public-safe MVP implementation is in progress.
+Initial public-safe MVP is live and verified.
 
 ## Scope
 
@@ -12,9 +12,24 @@ Initial public-safe MVP implementation is in progress.
 - Private-on-device Gelato questionnaire with copy-to-Telegram handoff.
 - No public chat backend and no sensitive itinerary fields.
 
+## Live surfaces
+
+- Site: `https://euro.jpop.cloud`
+- Repository: `https://github.com/clawSean/fari-euro-trip`
+- VPS static root: `/srv/websites/euro.jpop.cloud`
+
+## Verification
+
+- TypeScript: passed.
+- Tests: 12/12 passed.
+- Production build: passed.
+- Caddy config validation and graceful reload: passed.
+- HTTPS/TLS and security headers: HTTP 200 verified.
+- Mobile browser: route, comparison, and private planning tabs rendered.
+- Privacy smoke: zero `/api/` requests; planning answers persist locally.
+
 ## Next
 
-1. Typecheck, test, and build.
-2. Mobile/desktop smoke check.
-3. Publish repository.
-4. Deploy and verify `euro.jpop.cloud`.
+1. Add Fari/Storm's voluntary budget answers when shared privately.
+2. Enrich each scheduled Spotlight as its release date arrives.
+3. Update the coast comparison with live lodging and boat availability.
