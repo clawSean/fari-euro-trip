@@ -71,7 +71,23 @@ function PlanTab() {
   useEffect(() => localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)), [answers]);
   const text = useMemo(() => summary(answers), [answers]);
   const update = (key: keyof Answers, value: string) => setAnswers(current => ({ ...current, [key]: value }));
-  const copy = async () => { await navigator.clipboard.writeText(text); setCopied(true); window.setTimeout(() => setCopied(false), 2000); };
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
   const fields: Array<[keyof Answers, string, string]> = [["comfortableHotel", "Comfortable hotel total per night", "Example: €300 total"], ["stretchHotel", "Stretch hotel total per night", "Example: €450 for somewhere special"], ["boatBudget", "Boat budget for both", "Any rough total range works"], ["priority", "Main priority", "Luxury content, best value, or a mix?"], ["luggage", "Luggage reality", "Carry-ons, checked bags, full fashion department…"]];
   return <section className="space-y-10"><Heading eyebrow="Gelato planning desk" title="Answer privately. Paste only what you want to share." copy="Answers stay in this browser's local storage. The website does not send or publish them." /><div className="grid gap-8 lg:grid-cols-[1fr_0.85fr]"><div className="rounded-3xl border bg-white p-6 shadow-sm sm:p-8"><div className="space-y-5">{fields.map(([key, label, placeholder]) => <Field key={key} label={label} value={answers[key]} placeholder={placeholder} onChange={value => update(key, value)} />)}<label className="block"><span className="text-sm font-bold">Anything else Sean should factor in?</span><textarea value={answers.notes} onChange={event => update("notes", event.target.value)} rows={4} placeholder="Must-dos, hard nos, room setup, content goals…" className="mt-2 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-100" /></label></div><button onClick={copy} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-4 font-bold text-white hover:bg-rose-600"><Clipboard className="h-5 w-5" />{copied ? "Copied—paste into Fari Planz" : "Copy answers for Fari Planz"}</button></div><div className="space-y-5"><div className="rounded-3xl bg-gradient-to-br from-rose-500 to-orange-400 p-7 text-white"><LockKeyhole className="h-8 w-8" /><h3 className="mt-6 font-serif text-3xl font-bold">Telegram stays the planning room</h3><p className="mt-4 leading-7 text-white/90">Budgets and bookings change quickly and do not belong on a public page. Paste the summary into the existing group so Sean can research the right tier.</p></div><div className="rounded-3xl border bg-white p-6"><h3 className="font-bold">Privacy boundary</h3><p className="mt-2 text-sm leading-6 text-slate-600">Public: broad city dates, comparisons, ideas, and Spotlights. Private: hotels, transport details, budgets, screenshots, confirmations, and live location.</p></div></div></div></section>;
 }
