@@ -11,3 +11,10 @@
   HTTP 200. Future deploys must repeat ownership/mode normalization.
 - 2026-08-17: Mobile browser verified all primary tabs. The planning form made
   no API requests and persisted a synthetic answer only in local storage.
+- 2026-08-17: Fixed desktop route arrows that were clipped by each card's
+  `overflow-hidden`; arrows now sit visibly in the grid gaps on their own
+  bordered background.
+- 2026-08-17: Generated and added an original wide editorial hero illustration:
+  two stylish adult friends and a dapper moustached, hoop-earring lobster on a
+  yacht, with London/Florence/Italian-coast/Rome motifs and left-side negative
+  space for the headline. Built-in image generation path; no face references.

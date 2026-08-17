@@ -27,6 +27,8 @@ Initial public-safe MVP is live and verified.
 - HTTPS/TLS and security headers: HTTP 200 verified.
 - Mobile browser: route, comparison, and private planning tabs rendered.
 - Privacy smoke: zero `/api/` requests; planning answers persist locally.
+- Hero: original editorial Europe/yacht illustration at
+  `client/public/euro/hero-baddies-lobster.jpg`.
 
 ## Next
 
