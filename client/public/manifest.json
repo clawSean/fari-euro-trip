@@ -1,11 +1,11 @@
 {
-  "name": "Italy Trip Countdown",
-  "short_name": "Italy Trip",
-  "description": "Counting down to our amazing trip to Italy!",
+  "name": "Fari & Storm's Euro Summer",
+  "short_name": "Euro Summer",
+  "description": "A flexible London and Italy trip companion.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a2e",
-  "theme_color": "#009246",
+  "theme_color": "#0f172a",
   "icons": [
     {
       "src": "/favicon.png",
