@@ -28,3 +28,7 @@
   SQLite database, routed `/api/*` through Caddy, seeded the planning opener,
   and verified a real production send/read round-trip. Removed the synthetic QA
   message after proof; 390×844 expanded-chat layout has no horizontal overflow.
+- 2026-08-17: Replaced the hero art at Fari's request with a more energetic
+  yacht-party version: two glamorous adult friends laughing and celebrating
+  with their moustached, hoop-earring lobster companion. Preserved the wide
+  crop and dark left-side text-safe area. Built-in image-generation edit path.
