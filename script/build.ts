@@ -64,11 +64,11 @@ async function buildAll() {
 
 async function createShareAliases() {
   const sharePath = "travel-companion";
-  const shareUrl = `https://italy.jpop.cloud/${sharePath}`;
+  const shareUrl = `https://euro.jpop.cloud/${sharePath}/`;
   const indexHtml = await readFile("dist/public/index.html", "utf-8");
   const shareHtml = indexHtml
-    .replace('href="https://italy.jpop.cloud/"', `href="${shareUrl}"`)
-    .replace('content="https://italy.jpop.cloud/"', `content="${shareUrl}"`);
+    .replace('href="https://euro.jpop.cloud/"', `href="${shareUrl}"`)
+    .replaceAll('content="https://euro.jpop.cloud/"', `content="${shareUrl}"`);
 
   await mkdir(`dist/public/${sharePath}`, { recursive: true });
   await writeFile(`dist/public/${sharePath}/index.html`, shareHtml);

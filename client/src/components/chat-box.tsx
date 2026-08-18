@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { X, Send, User } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { readLocalStorage, writeLocalStorage } from "@/lib/safe-storage";
 import type { ChatMessage } from "@shared/schema";
 import {
   normalizeHref,
@@ -107,18 +108,12 @@ function getLatestMessageId(messages: ChatMessage[]) {
 
 export function ChatBox() {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [nickname, setNickname] = useState<string | null>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("chat-nickname");
-    }
-    return null;
-  });
+  const [nickname, setNickname] = useState<string | null>(() => readLocalStorage("chat-nickname"));
   const [nicknameInput, setNicknameInput] = useState("");
   const [messageInput, setMessageInput] = useState("");
   const [showNicknamePrompt, setShowNicknamePrompt] = useState(false);
   const [lastSeenMessageId, setLastSeenMessageId] = useState(() => {
-    if (typeof window === "undefined") return 0;
-    return Number(localStorage.getItem(CHAT_LAST_SEEN_KEY) || 0);
+    return Number(readLocalStorage(CHAT_LAST_SEEN_KEY) || 0);
   });
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -153,9 +148,7 @@ export function ChatBox() {
     if (!isExpanded || latestMessageId === 0) return;
 
     setLastSeenMessageId(latestMessageId);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(CHAT_LAST_SEEN_KEY, String(latestMessageId));
-    }
+    writeLocalStorage(CHAT_LAST_SEEN_KEY, String(latestMessageId));
   }, [isExpanded, latestMessageId]);
 
   const handleSendMessage = () => {
@@ -176,7 +169,7 @@ export function ChatBox() {
     if (!nicknameInput.trim()) return;
     const name = nicknameInput.trim();
     setNickname(name);
-    localStorage.setItem("chat-nickname", name);
+    writeLocalStorage("chat-nickname", name);
     setShowNicknamePrompt(false);
 
     if (messageInput.trim()) {

@@ -1,5 +1,7 @@
 # Log
 
+2026-08-18T22:08:14Z · Sean · fix · Completed the deeper mobile compatibility pass. Correlated Storm's Safari screenshot with an exact-time blocked QUIC packet, proved Caddy 2.6.2's HTTP/3 path returns an iOS WebKit internal certificate error, and found Caddy multi-bind bug #6226 had also omitted the IPv4 port-80 listener. Added an explicit HTTP→HTTPS listener plus Euro-only `Alt-Svc: clear`; verified HTTP/1.1, HTTP/2, Apple networking, iOS Safari, Chrome desktop/mobile, valid TLS, and 10/10 global HTTP+HTTPS probes. Reworked the mobile hero to request one image, reduced Gelato from 1.54 MB to 43 KB, avatars from 7.68 MB to 205 KB, and install icons from 2.59 MB to 385 KB; narrowed fonts, added safe storage and an error boundary, targeted Safari 13, fixed the inherited Euro deploy/share paths, and added immutable caching for fingerprinted assets. TypeScript, 14/14 tests, production build, 390px no-overflow proof, chat type/clear proof, Caddy validation, and both live services passed · STATUS.md
+
 2026-08-18T17:43:00Z · Sean · fix · Investigated an iPhone Safari/5G timeout reported by Storm: the site, TLS, Caddy, Gelato service, CPU, memory, and disk were healthy, but Caddy advertised HTTP/3 while UFW allowed only TCP 443. Added matching IPv4/IPv6 UDP 443 rules for HTTPS HTTP/3, verified Caddy was listening on UDP 443, both services remained active, and repeated public HTTPS probes returned HTTP 200 · STATUS.md
 
 - 2026-08-17: Forked the current ItalyTrip source into an isolated project.

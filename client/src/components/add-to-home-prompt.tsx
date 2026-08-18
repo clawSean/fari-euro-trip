@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { X, Heart, Share, Plus, Smartphone } from "lucide-react";
+import { readLocalStorage, writeLocalStorage } from "@/lib/safe-storage";
 
 type DeviceType = "ios" | "android" | "other";
 
@@ -23,7 +24,7 @@ export function AddToHomePrompt() {
   const [deviceType, setDeviceType] = useState<DeviceType>("other");
 
   useEffect(() => {
-    const dismissed = localStorage.getItem("add-to-home-dismissed");
+    const dismissed = readLocalStorage("add-to-home-dismissed");
     const dismissedTime = dismissed ? parseInt(dismissed, 10) : 0;
     const oneWeek = 7 * 24 * 60 * 60 * 1000;
     
@@ -50,7 +51,7 @@ export function AddToHomePrompt() {
     setIsAnimating(false);
     setTimeout(() => {
       setIsVisible(false);
-      localStorage.setItem("add-to-home-dismissed", Date.now().toString());
+      writeLocalStorage("add-to-home-dismissed", Date.now().toString());
     }, 300);
   };
 

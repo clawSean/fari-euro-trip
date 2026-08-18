@@ -30,6 +30,8 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    target: ["es2018", "safari13"],
+    cssTarget: "safari13",
   },
   server: {
     fs: {

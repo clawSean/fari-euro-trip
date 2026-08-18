@@ -3,12 +3,7 @@
 @tailwind utilities;
 
 @media (max-width: 639px) {
-  img[src="/euro/hero-fari-storm.jpg"] {
-    content: url("/euro/hero-fari-storm-mobile.jpg");
-    object-position: center;
-  }
-
-  header:has(img[src="/euro/hero-fari-storm.jpg"]) h1 {
+  .euro-hero h1 {
     margin-top: 15rem;
   }
 }
