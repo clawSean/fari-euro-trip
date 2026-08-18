@@ -28,6 +28,9 @@ Public-safe trip companion with shared Gelato chat is live and verified.
 - Production build: passed.
 - Caddy config validation and graceful reload: passed.
 - HTTPS/TLS and security headers: HTTP 200 verified.
+- Mobile edge transport: Caddy's advertised HTTP/3 path is reachable through
+  UDP 443 after the VPS firewall rule was corrected on 2026-08-18; TCP HTTPS
+  remains available as fallback.
 - Production chat round-trip passed through the browser and API; synthetic
   smoke message was removed afterward.
 - Mobile browser: expanded chat fits a 390×844 viewport with no horizontal

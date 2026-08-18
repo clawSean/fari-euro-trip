@@ -1,5 +1,7 @@
 # Log
 
+2026-08-18T17:43:00Z · Sean · fix · Investigated an iPhone Safari/5G timeout reported by Storm: the site, TLS, Caddy, Gelato service, CPU, memory, and disk were healthy, but Caddy advertised HTTP/3 while UFW allowed only TCP 443. Added matching IPv4/IPv6 UDP 443 rules for HTTPS HTTP/3, verified Caddy was listening on UDP 443, both services remained active, and repeated public HTTPS probes returned HTTP 200 · STATUS.md
+
 - 2026-08-17: Forked the current ItalyTrip source into an isolated project.
 - 2026-08-17: Replaced the shared public chat with a local-only planning desk.
 - 2026-08-17: Added public route, coast comparison, privacy boundary, and six
