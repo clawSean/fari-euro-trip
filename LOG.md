@@ -54,3 +54,11 @@
   Added a dedicated portrait companion image and a mobile-only responsive image
   override so both women and the lobster remain visible without horizontal
   overflow.
+- 2026-08-18: Replaced six one-line Spotlight teasers with a canonical,
+  prewritten Euro-specific set. Claude Opus supplied the prose pass; Sean kept
+  the facts, privacy, creator utility, and baddie-first tone on brief. Changed
+  release gating from UTC to the viewer's local calendar day.
+- 2026-08-18: Added a deterministic read-only live monitor for HTTP/1.1,
+  HTTP/2, redirects, built assets, Gelato, service state, 24-hour errors, and
+  response timing. Scheduled it for 6:45 AM Pacific, away from Spotlight and
+  other site work. The first forced cron run passed and delivered to Telegram.

@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
     "test": "tsx --test 'client/src/**/*.test.ts'",
+    "monitor:live": "bash scripts/monitor-live.sh",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {

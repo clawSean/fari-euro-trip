@@ -8,7 +8,7 @@ Public-safe trip companion with shared Gelato chat is live and verified.
 
 - Broad route: London → Florence → coast TBD → Rome.
 - Coast comparison: Positano, Amalfi, Cinque Terre.
-- Six scheduled daily Spotlights.
+- Six prewritten, reviewed daily Spotlights with local-calendar unlocking.
 - Full Gelato shared chat: nicknames, persistent history, unread state, and links.
 - Isolated SQLite backend; no message crossover with `italy.jpop.cloud`.
 
@@ -53,6 +53,33 @@ Public-safe trip companion with shared Gelato chat is live and verified.
   at `client/public/euro/hero-fari-storm-mobile.jpg` so both faces survive the
   phone crop.
 
+## Spotlight runway
+
+- London — Aug 17 — drafted, reviewed, live.
+- Florence — Aug 18 — drafted, reviewed, live.
+- Positano — Aug 19 — drafted, reviewed, scheduled.
+- Amalfi — Aug 20 — drafted, reviewed, scheduled.
+- Cinque Terre — Aug 21 — drafted, reviewed, scheduled.
+- Rome — Aug 22 — drafted, reviewed, scheduled.
+
+All six pieces are stored in `client/src/data/euro-spotlights.ts`. Claude Opus
+provided the prose pass; Sean reviewed the facts, privacy, baddie voice, and
+mobile length before deployment. Unlocking uses the viewer's local calendar day,
+not UTC, so a drop no longer appears at 5 PM Pacific on the prior date.
+
+## Daily health monitor
+
+- Schedule: `45 6 * * *` in `America/Los_Angeles`.
+- OpenClaw job: `97088412-f74a-472b-b160-83f8da7f030e`.
+- Entry point: `npm run monitor:live`.
+- Coverage: HTTP/1.1, HTTP/2, bare-host redirect, built assets, Gelato read API,
+  Caddy/Gelato service state, 24-hour error scan, and response timing.
+- Behavior: read-only; reports to the Euro Summer Telegram group and never edits,
+  deploys, reloads, or restarts the site.
+- Canary: passed on Aug 18 in 15.9 seconds; Telegram delivery confirmed with
+  HTTP/1.1 200, HTTP/2 200, Gelato 200, zero asset failures, and zero 24-hour
+  chat/edge errors.
+
 ## Next
 
 1. Collect Fari and Storm's public creator-platform links, preferred display
@@ -60,7 +87,8 @@ Public-safe trip companion with shared Gelato chat is live and verified.
 2. Review the Grok/Sol/Opus creator-promotion proposals and ship the selected
    small, high-impact creator features.
 3. Use Gelato to collect Fari/Storm's hotel, boat, priority, and luggage inputs.
-4. Enrich each scheduled Spotlight as its release date arrives.
+4. Add a second reviewed Spotlight runway only if the group wants daily drops
+   beyond the six named-location pieces ending Aug 22.
 5. Update the coast comparison with live lodging and boat availability.
 6. With explicit operations approval, upgrade Caddy from 2.6.2 and retest
    Apple/Chrome HTTP/3 before removing the host-scoped `Alt-Svc: clear` header.

@@ -21,6 +21,22 @@ surface at `euro.jpop.cloud`.
 5. **Gelato is not an exception:** its visual design, copy, prompts, and future AI
    assistance must follow the same baddie-first, accommodating, creator-aware
    standard as the rest of the site.
+6. **Girl bosses decide the product:** for product, design, and editorial choices,
+   Fari and Storm's stated direction is the deciding spec. “No compromise” means
+   no genericization or dilution; privacy, safety, accessibility, payment, and
+   privileged-action boundaries still apply.
+
+## Spotlight workflow
+
+1. Prewrite every scheduled piece before its release date; never ship a teaser
+   that merely promises a future brief.
+2. Prefer Claude Opus for the prose draft when available, then fact-check and
+   review it for the baddie voice, practical value, creator usefulness, privacy,
+   and mobile readability before publishing.
+3. Keep one canonical Euro-specific Spotlight dataset and a drafted/reviewed/
+   scheduled ledger in `STATUS.md`.
+4. Prefer one reviewed deploy with local-date unlocking over unattended daily
+   repository writes.
 
 ## Change checklist
 

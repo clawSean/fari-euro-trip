@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Anchor, ArrowRight, CalendarDays, Check, Compass, MapPin, MoonStar, Plane, ShipWheel, ShoppingBag, Sparkles } from "lucide-react";
 import { ChatBox } from "@/components/chat-box";
+import { euroSpotlights, getLocalDateKey } from "@/data/euro-spotlights";
 
 type Tab = "route" | "choose" | "spotlights";
 
@@ -15,15 +16,6 @@ const choices = [
   { name: "Positano", eyebrow: "Maximum baddie energy", verdict: "Best if content, beach clubs, shopping, and a Capri boat day matter most.", strengths: ["Strongest fashion-and-coast visuals", "Easy boat access to Capri and Li Galli", "Beach clubs, sunset bars, and a real nightclub"], tradeoffs: ["Usually the priciest stay", "Stairs everywhere", "Transfers need more planning"], route: "Florence → Salerno fast train → seasonal ferry/private transfer", accent: "from-fuchsia-500 to-orange-400" },
   { name: "Amalfi", eyebrow: "Smart coastal base", verdict: "Best balance of boat access, logistics, scenery, and possible hotel value.", strengths: ["Simpler access through Salerno", "Great base for Ravello and coast ferries", "More practical for the later move to Rome"], tradeoffs: ["Less nightlife than Positano", "Content is elegant rather than clubby", "Still expensive in August"], route: "Florence → Salerno fast train → short ferry to Amalfi", accent: "from-sky-500 to-emerald-400" },
   { name: "Cinque Terre", eyebrow: "Pastel village cinema", verdict: "Best if the priority shifts toward village-hopping, hiking, and Ligurian content.", strengths: ["Fastest and easiest from Florence", "Five distinct village backdrops", "Boat, swim, pesto, and sunset potential"], tradeoffs: ["Quiet nightlife and lighter shopping", "Crowded in August", "Longer final move south to Rome"], route: "Florence → La Spezia/Monterosso by train → Rome later by rail", accent: "from-amber-400 to-rose-400" },
-];
-
-const spotlights = [
-  { release: "2026-08-17", city: "London", title: "London After Dark", icon: "🇬🇧", copy: "Rooftop light, late dinners, fashion districts, and content backdrops without turning the trip into a photoshoot commute." },
-  { release: "2026-08-18", city: "Florence", title: "Golden Hour Has an Address", icon: "🌇", copy: "The rooftop, piazza, leather, and wine lane—plus places that still feel good after the camera is put away." },
-  { release: "2026-08-19", city: "Positano", title: "The Positano Case", icon: "🍋", copy: "What the premium buys: beach-club theater, vertical village drama, Capri access, and the strongest yacht-era fit." },
-  { release: "2026-08-20", city: "Amalfi", title: "The Smarter Coast Base", icon: "⛵", copy: "Why Amalfi may win on boats, movement, Ravello access, and value without giving up the cinematic coastline." },
-  { release: "2026-08-21", city: "Cinque Terre", title: "Five Villages, One Plot Twist", icon: "🎨", copy: "The wildcard: easier from Florence and wildly photogenic, at the cost of nightlife and a clean southbound route." },
-  { release: "2026-08-22", city: "Rome", title: "The Finale, Not a Layover", icon: "🏛️", copy: "A one-night finish designed around dinner, one iconic walk, and a low-drama airport morning." },
 ];
 
 function Heading({ eyebrow, title, copy }: { eyebrow: string; title: string; copy: string }) {
@@ -53,8 +45,8 @@ function List({ title, items, positive = false }: { title: string; items: string
 }
 
 function SpotlightsTab() {
-  const today = new Date().toISOString().slice(0, 10);
-  return <section className="space-y-10"><Heading eyebrow="Daily drops" title="One location Spotlight every day." copy="The runway covers every named destination—including candidates—so the choice gets more informed instead of more frantic." /><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{spotlights.map((item, index) => { const unlocked = item.release <= today; return <article key={item.city} className={`rounded-3xl border p-6 ${unlocked ? "border-slate-200 bg-white shadow-sm" : "border-dashed border-slate-300 bg-slate-50"}`}><div className="flex items-center justify-between"><span className="text-4xl">{item.icon}</span><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Drop {index + 1}</span></div><p className="mt-8 text-xs font-bold uppercase tracking-wider text-rose-600">{item.city} · {item.release}</p><h3 className="mt-2 font-serif text-2xl font-bold">{unlocked ? item.title : "Unlocks daily"}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{unlocked ? item.copy : "A fresh destination brief is waiting. Anticipation is free production value."}</p></article>; })}</div></section>;
+  const today = getLocalDateKey();
+  return <section className="space-y-10"><Heading eyebrow="Daily drops" title="One location Spotlight every day." copy="Every piece is already written and waiting. Each destination—including the candidates—unlocks on its local calendar day, so the choice gets sharper without last-minute content scramble." /><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{euroSpotlights.map((item, index) => { const unlocked = item.release <= today; return <article key={item.city} className={`rounded-3xl border p-6 ${unlocked ? "border-slate-200 bg-white shadow-sm" : "border-dashed border-slate-300 bg-slate-50"}`}><div className="flex items-center justify-between"><span className="text-4xl">{item.icon}</span><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Drop {index + 1}</span></div><p className="mt-8 text-xs font-bold uppercase tracking-wider text-rose-600">{item.city} · {item.release}</p><h3 className="mt-2 font-serif text-2xl font-bold">{unlocked ? item.title : "Unlocks daily"}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{unlocked ? item.copy : "A fresh destination brief is waiting. Anticipation is free production value."}</p></article>; })}</div></section>;
 }
 
 export default function FariHome() {
