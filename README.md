@@ -6,15 +6,16 @@
 
 A public-safe, mobile-first trip companion for a flexible London and Italy
 route. It includes a coast comparison, scheduled destination Spotlights, and a
-private-on-device planning questionnaire.
+shared Gelato trip chat.
 
 ## Privacy model
 
 - Public: broad dates, cities, destination comparisons, and inspiration.
 - Private: hotels, budgets, booking details, screenshots, and live location.
-- Questionnaire answers remain in browser local storage until the visitor
-  explicitly copies them.
-- The deployed site is static and does not expose the original trip-chat API.
+- Gelato messages are stored in the site's isolated SQLite chat database and
+  are visible to people using this trip site.
+- Chat history is not published into the site's editorial content or shared
+  with the separate `italy.jpop.cloud` chat.
 
 ## Development
 

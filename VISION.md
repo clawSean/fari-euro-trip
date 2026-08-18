@@ -8,7 +8,9 @@ budgets, flight identifiers, or live location.
 ## Product rules
 
 1. Public content stays broad and inspiration-focused.
-2. Sensitive planning stays in the private Telegram group.
-3. Gelato planning answers stay on-device and are shared only by copy/paste.
+2. Gelato provides one shared conversation for trip questions, comparisons,
+   and planning inputs; messages are visible to people using the trip site.
+3. Exact bookings, confirmations, screenshots, and live location stay in the
+   private Telegram group.
 4. Positano, Amalfi, and Cinque Terre remain candidates until chosen.
 5. Release at least one Spotlight for every named location.

@@ -22,3 +22,9 @@
   loaded at 1823×863, all three desktop arrows render in the inter-card gaps,
   mobile hides those decorative arrows, and the 390px viewport has no horizontal
   overflow.
+- 2026-08-17: Restored the complete Gelato shared-chat UI and removed the
+  questionnaire tab so planning is one conversation rather than two competing
+  systems. Added the isolated `euro-chat-api.service` on port 3013 with its own
+  SQLite database, routed `/api/*` through Caddy, seeded the planning opener,
+  and verified a real production send/read round-trip. Removed the synthetic QA
+  message after proof; 390×844 expanded-chat layout has no horizontal overflow.
