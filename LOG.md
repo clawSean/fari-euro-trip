@@ -18,3 +18,7 @@
   two stylish adult friends and a dapper moustached, hoop-earring lobster on a
   yacht, with London/Florence/Italian-coast/Rome motifs and left-side negative
   space for the headline. Built-in image generation path; no face references.
+- 2026-08-17: Deployed commit `c6ccfbb`. Live browser proof confirmed the hero
+  loaded at 1823×863, all three desktop arrows render in the inter-card gaps,
+  mobile hides those decorative arrows, and the 390px viewport has no horizontal
+  overflow.
