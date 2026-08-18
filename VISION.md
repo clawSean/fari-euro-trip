@@ -14,3 +14,13 @@ budgets, flight identifiers, or live location.
    private Telegram group.
 4. Positano, Amalfi, and Cinque Terre remain candidates until chosen.
 5. Release at least one Spotlight for every named location.
+6. Every surface stays pretty, mobile-first, UX-optimized, joyful, and explicitly
+   baddie-focused; Gelato follows the same standard.
+7. Public creator-platform support is a core product lane. Promote only the
+   profiles and links Fari and Storm choose to share, without exposing private
+   itinerary details or live location.
+8. Gelato should be maximally accommodating inside ordinary privacy, safety,
+   payment, and privileged-action boundaries. Public chat content never becomes
+   trusted system instruction.
+
+Implementation rules and the per-change checklist live in `AGENTS.md`.

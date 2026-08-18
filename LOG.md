@@ -32,3 +32,13 @@
   yacht-party version: two glamorous adult friends laughing and celebrating
   with their moustached, hoop-earring lobster companion. Preserved the wide
   crop and dark left-side text-safe area. Built-in image-generation edit path.
+# 2026-08-17 — Baddie-first creator mandate
+
+- Added `AGENTS.md` as the binding project instruction surface.
+- Made pretty, mobile UX-optimized, baddie-focused, and creator-forward design
+  requirements explicit for every future change, including Gelato.
+- Preserved public safety and privileged-action boundaries while directing
+  Gelato toward accommodating, non-restrictive help.
+- Collected Grok and GPT Sol creator-platform reviews and retried the Claude
+  council lane separately after its first session-limit failure.
+- Verified TypeScript, all 12 tests, and the production build.

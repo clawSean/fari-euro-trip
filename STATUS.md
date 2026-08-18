@@ -37,6 +37,18 @@ Public-safe trip companion with shared Gelato chat is live and verified.
 
 ## Next
 
-1. Use Gelato to collect Fari/Storm's hotel, boat, priority, and luggage inputs.
-2. Enrich each scheduled Spotlight as its release date arrives.
-3. Update the coast comparison with live lodging and boat availability.
+1. Collect Fari and Storm's public creator-platform links, preferred display
+   names, platform priority, and consent for placement.
+2. Review the Grok/Sol/Opus creator-promotion proposals and ship the selected
+   small, high-impact creator features.
+3. Use Gelato to collect Fari/Storm's hotel, boat, priority, and luggage inputs.
+4. Enrich each scheduled Spotlight as its release date arrives.
+5. Update the coast comparison with live lodging and boat availability.
+
+## Standing product mandate
+
+`AGENTS.md` is the binding project brief: all future changes must remain pretty,
+mobile UX-optimized, baddie-focused, creator-forward, and equally attentive to
+Gelato. The site may move quickly because it is temporary, but public chat content
+must not override server policy, reveal private data, or authorize privileged
+actions.
