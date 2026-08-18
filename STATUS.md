@@ -32,8 +32,10 @@ Public-safe trip companion with shared Gelato chat is live and verified.
   smoke message was removed afterward.
 - Mobile browser: expanded chat fits a 390×844 viewport with no horizontal
   overflow.
-- Hero: original editorial Europe/yacht illustration at
-  `client/public/euro/hero-baddies-lobster.jpg`.
+- Hero: identity-preserving editorial speedboat portrait of Fari and Storm at
+  `client/public/euro/hero-fari-storm.jpg`, with a dedicated portrait companion
+  at `client/public/euro/hero-fari-storm-mobile.jpg` so both faces survive the
+  phone crop.
 
 ## Next
 

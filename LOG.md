@@ -42,3 +42,11 @@
 - Collected Grok and GPT Sol creator-platform reviews and retried the Claude
   council lane separately after its first session-limit failure.
 - Verified TypeScript, all 12 tests, and the production build.
+- 2026-08-18: Used Fari and Storm's supplied photo as an identity reference for
+  a new golden-hour Amalfi speedboat hero. Preserved both faces, the dark
+  left-side copy area, mobile-safe composition, and the moustached lobster
+  accomplice; saved the new asset non-destructively as `hero-fari-storm.jpg`.
+- 2026-08-18: Desktop proof passed, but the first 390px crop hid most of Fari.
+  Added a dedicated portrait companion image and a mobile-only responsive image
+  override so both women and the lobster remain visible without horizontal
+  overflow.
