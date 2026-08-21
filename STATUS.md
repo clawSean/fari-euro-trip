@@ -2,13 +2,18 @@
 
 ## Current phase
 
-Public-safe trip companion with shared Gelato chat is live and verified.
+Trip is live. The route is locked, the site tracks the current day and city, and
+the Spotlight runway now covers every day through the flight home.
 
 ## Scope
 
-- Broad route: London → Florence → coast TBD → Rome.
-- Coast comparison: Positano, Amalfi, Cinque Terre.
-- Six prewritten, reviewed daily Spotlights with local-calendar unlocking.
+- Locked route: London Aug 19–22, Florence Aug 22–25, Amalfi Aug 25–27,
+  Positano Aug 27–30, Rome Aug 30–31.
+- Coast decision closed: two nights Amalfi, three nights Positano; Cinque Terre
+  is shown as deliberately not chosen rather than deleted.
+- Live "now" strip: trip day counter, current city, next move, and today's drop.
+- Fifteen prewritten, reviewed daily Spotlights with local-calendar unlocking,
+  each carrying a shot idea and a copyable caption starter.
 - Full Gelato shared chat: nicknames, persistent history, unread state, and links.
 - Isolated SQLite backend; no message crossover with `italy.jpop.cloud`.
 
@@ -55,14 +60,16 @@ Public-safe trip companion with shared Gelato chat is live and verified.
 
 ## Spotlight runway
 
-- London — Aug 17 — drafted, reviewed, live.
-- Florence — Aug 18 — drafted, reviewed, live.
-- Positano — Aug 19 — drafted, reviewed, scheduled.
-- Amalfi — Aug 20 — drafted, reviewed, scheduled.
-- Cinque Terre — Aug 21 — drafted, reviewed, scheduled.
-- Rome — Aug 22 — drafted, reviewed, scheduled.
+Aug 17 London, Aug 18 Florence, Aug 19 Positano, and Aug 20 Amalfi already
+dropped and are left untouched as history. The runway was then rebuilt to follow
+the locked itinerary instead of the retired coast comparison:
 
-All six pieces are stored in `client/src/data/euro-spotlights.ts`. Claude Opus
+- Aug 21 London finale · Aug 22 Florence arrival · Aug 23 leather and golden hour
+- Aug 24 Duomo-or-Chianti · Aug 25 travel day · Aug 26 Ravello
+- Aug 27 ferry to Positano · Aug 28 Africana cave club · Aug 29 boat day to Capri
+- Aug 30 Rome finale · Aug 31 sunrise Trevi and the flight home
+
+All fifteen pieces are stored in `client/src/data/euro-spotlights.ts`. Claude Opus
 provided the prose pass; Sean reviewed the facts, privacy, baddie voice, and
 mobile length before deployment. Unlocking uses the viewer's local calendar day,
 not UTC, so a drop no longer appears at 5 PM Pacific on the prior date.
@@ -87,9 +94,8 @@ not UTC, so a drop no longer appears at 5 PM Pacific on the prior date.
 2. Review the Grok/Sol/Opus creator-promotion proposals and ship the selected
    small, high-impact creator features.
 3. Use Gelato to collect Fari/Storm's hotel, boat, priority, and luggage inputs.
-4. Add a second reviewed Spotlight runway only if the group wants daily drops
-   beyond the six named-location pieces ending Aug 22.
-5. Update the coast comparison with live lodging and boat availability.
+4. Add live lodging or boat availability to the coast page only if the group
+   asks; the decision itself is closed.
 6. With explicit operations approval, upgrade Caddy from 2.6.2 and retest
    Apple/Chrome HTTP/3 before removing the host-scoped `Alt-Svc: clear` header.
 
