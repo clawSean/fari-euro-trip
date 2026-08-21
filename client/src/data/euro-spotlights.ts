@@ -50,8 +50,8 @@ export const euroSpotlights: EuroSpotlight[] = [
     city: "London",
     title: "Last Call, London",
     icon: "🎡",
-    copy: "The final London day belongs to the shots you almost skipped: the quiet mews street, the department-store lighting, the dinner that runs long on purpose. Pack tonight, hang tomorrow's travel outfit early, and make the last round the good one.",
-    shot: "Night exterior with wet pavement if it rains—reflections are free production value.",
+    copy: "The last London day belongs to the shots you almost skipped: the quiet mews street, the department-store lighting, the dinner that runs long on purpose. Pack tonight, hang tomorrow's travel outfit early, and make the last round the good one.",
+    shot: "Wet pavement after rain, shot toward the streetlights—the reflections do the work.",
     caption: "London, you were a lot. Respectfully, so were we.",
   },
   {

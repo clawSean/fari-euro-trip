@@ -26,6 +26,25 @@ surface at `euro.jpop.cloud`.
    no genericization or dilution; privacy, safety, accessibility, payment, and
    privileged-action boundaries still apply.
 
+## Voice register (binding)
+
+Researched 2026-08-20 after the copy was flagged as "way too meta." Full note:
+`/Users/Sean/.openclaw/workspace/knowledge/research/baddie-voice-register-2026-08-20.md`.
+
+1. **Deadpan in text, maximalist in visuals.** Short, flat, specific lines under
+   dramatic imagery. Never hype-stacked captions.
+2. **No writer-brain metaphors.** Banned unless a person in the group says them
+   first: plot, movie, scene, arc, narrative, chaos, production value, "that's a
+   wrap." They describe the trip from outside instead of speaking from inside it.
+   Test: if the line belongs in a pitch deck about the trip rather than a caption
+   from the trip, rewrite it.
+3. **Speak in concrete nouns** — the stairs, the ferry, the exchange rate, the bag,
+   the 4 AM boat home. Specificity is the joke.
+4. **Current and safe:** era/energy constructions, "soft life", "locked in",
+   "booked and busy", "no notes", "receipts", location-cinematic lines.
+5. **Dated, avoid:** "no cap", full-throttle "slay", plain "living my best life",
+   "good vibes only", written-out "giving main character energy".
+
 ## Spotlight workflow
 
 1. Prewrite every scheduled piece before its release date; never ship a teaser
